@@ -1,11 +1,11 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 import { Moon, Sun, Menu, X } from "lucide-react";
-import { cn } from "../../lib/utils";
 import { useStore } from "@/store/useStore";
 
 const navLinks = [
@@ -18,6 +18,16 @@ const navLinks = [
 export function Header() {
   const { theme, setTheme } = useTheme();
   const { isMounted, isMenuOpen, toggleMenu, setMenuOpen } = useStore();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    if (isMenuOpen && menuRef.current) {
+      gsap.fromTo(menuRef.current,
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }
+      );
+    }
+  }, [isMenuOpen]);
 
   if (!isMounted) return null;
 
@@ -75,34 +85,30 @@ export function Header() {
       </nav>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-forest/10 dark:border-champagne/10 p-6 flex flex-col space-y-4 shadow-xl"
-          >
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-lg font-medium hover:text-accent transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
+      {isMenuOpen && (
+        <div
+          ref={menuRef}
+          className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-forest/10 dark:border-champagne/10 p-6 flex flex-col space-y-4 shadow-xl opacity-0"
+        >
+          {navLinks.map((link) => (
             <Link
-              href="/contact"
+              key={link.name}
+              href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="w-full py-4 bg-foreground text-background font-bold text-center rounded-xl"
+              className="text-lg font-medium hover:text-accent transition-colors"
             >
-              Book a Strategy Call
+              {link.name}
             </Link>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          ))}
+          <Link
+            href="/contact"
+            onClick={() => setMenuOpen(false)}
+            className="w-full py-4 bg-foreground text-background font-bold text-center rounded-xl"
+          >
+            Book a Strategy Call
+          </Link>
+        </div>
+      )}
     </header>
   );
 }

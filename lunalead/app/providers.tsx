@@ -5,7 +5,6 @@ import ReactLenis from "lenis/react";
 import { useStore } from "@/store/useStore";
 import { useEffect, useState } from "react";
 import { LoadingState } from "@/components/shared/LoadingState";
-import { AnimatePresence } from "framer-motion";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [mounted, setMountedLocal] = useState(false);
@@ -13,7 +12,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true); // Global store sync
-    setMountedLocal(true); // Local guard
+    // We delay the local mounted state slightly to allow LoadingState to be visible
+    // but the actual fade out should be handled by the LoadingState itself if possible
+    // or we just remove AnimatePresence for now.
+    setMountedLocal(true); 
   }, [setMounted]);
 
   return (
@@ -24,9 +26,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       storageKey="lunalead-theme"
     >
       <ReactLenis root>
-        <AnimatePresence mode="wait">
-          {!mounted && <LoadingState key="loader" />}
-        </AnimatePresence>
+        {!mounted && <LoadingState />}
         {children}
       </ReactLenis>
     </ThemeProvider>

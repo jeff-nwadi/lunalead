@@ -1,9 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { cn } from "../../lib/utils";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
@@ -29,34 +33,64 @@ const projects = [
 ];
 
 export default function WorkPage() {
+  const containerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+   
+      gsap.fromTo(headerRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+      );
+      if (projectsRef.current) {
+        const items = gsap.utils.toArray<HTMLDivElement>(".project-item");
+        items.forEach((item) => {
+          gsap.fromTo(item,
+            { opacity: 0, y: 40 },
+            { 
+              opacity: 1, 
+              y: 0, 
+              duration: 0.8,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: item,
+                start: "top 80%",
+              }
+            }
+          );
+        });
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="pt-20 pb-20 container mx-auto px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-4xl mb-20"
+    <section ref={containerRef} className="pt-20 pb-20 container mx-auto px-6">
+      <div
+        ref={headerRef}
+        className="max-w-4xl mb-20 opacity-0"
       >
         <span className="text-accent font-bold uppercase tracking-widest text-xs mb-4 block">Case Studies</span>
         <h1 className="text-5xl md:text-7xl font-black mb-8 leading-wide clash-display">
           Selected Works. <br />
           <span className="text-accent underline decoration-4 underline-offset-8">Precision</span> meets passion.
         </h1>
-      </motion.div>
+      </div>
 
-      <div className="space-y-40">
+      <div ref={projectsRef} className="space-y-40">
         {projects.map((project, idx) => (
-          <motion.div
+          <div
             key={project.id}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
             className={cn(
-              "grid grid-cols-1 lg:grid-cols-2 gap-20 items-center",
+              "project-item grid grid-cols-1 lg:grid-cols-2 gap-20 items-center opacity-0",
               idx % 2 !== 0 && "lg:flex-row-reverse"
             )}
           >
             <div className={cn(idx % 2 !== 0 && "lg:order-2")}>
-              <div className="relative group overflow-hidden rounded-3xl aspect-[4/3] bg-forest/10 border border-forest/10">
+              <div className="relative group overflow-hidden rounded-3xl aspect-4/3 bg-forest/10 border border-forest/10">
                 <Image 
                   src={project.image} 
                   alt={project.title} 
@@ -85,7 +119,7 @@ export default function WorkPage() {
                 View Full Case Study <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
@@ -107,7 +141,7 @@ export default function WorkPage() {
                 height={800}
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+              <div className="absolute inset-0 bg-linear-to-t from-forest/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
                 <p className="text-champagne font-bold">Luxury Pet UI Concept {i}</p>
               </div>
             </div>

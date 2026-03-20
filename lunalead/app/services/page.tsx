@@ -1,7 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CheckCircle2, ArrowRight } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
@@ -24,7 +28,7 @@ const services = [
     features: [
       "Custom Next.js 15+ Build",
       "100/100 Lighthouse Optimization",
-      "Framer Motion Micro-Animations",
+      "GSAP Micro-Animations",
       "Headless CMS Integration (Sanity)",
       "Technical SEO Architecture"
     ],
@@ -46,9 +50,43 @@ const services = [
 ];
 
 export default function ServicesPage() {
+  const containerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // Header entrance
+      gsap.fromTo(headerRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+      );
+
+      // Service cards entrance
+      if (gridRef.current) {
+        gsap.fromTo(gridRef.current.children,
+          { opacity: 0, y: 30 },
+          { 
+            opacity: 1, 
+            y: 0, 
+            duration: 0.8, 
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: "top 80%",
+            }
+          }
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="pt-20 pb-20 container mx-auto px-6">
-      <div className="max-w-3xl mb-20">
+    <section ref={containerRef} className="pt-20 pb-20 container mx-auto px-6">
+      <div ref={headerRef} className="max-w-3xl mb-20 opacity-0">
         <span className="text-accent font-bold uppercase tracking-widest text-xs mb-4 block">Productized Offers</span>
         <h1 className="text-5xl md:text-7xl font-black mb-10 leading-[0.9] clash-display">
           Elite <span className="text-accent ">Packages</span> <br />
@@ -60,15 +98,11 @@ export default function ServicesPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div ref={gridRef} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {services.map((service, i) => (
-          <motion.div
+          <div
             key={service.title}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            viewport={{ once: true }}
-            className={`p-10 rounded-3xl border ${
+            className={`p-10 rounded-3xl border opacity-0 ${
               service.accent 
               ? "bg-accent text-champagne border-accent scale-105 shadow-2xl z-10" 
               : "bg-forest/5 dark:bg-white/5 border-forest/10 dark:border-white/10"
@@ -81,7 +115,7 @@ export default function ServicesPage() {
               {service.description}
             </p>
             
-            <div className="space-y-4 mb-12 flex-grow">
+            <div className="space-y-4 mb-12 grow">
               {service.features.map(f => (
                 <div key={f} className="flex items-start gap-3">
                   <CheckCircle2 size={20} className={service.accent ? "text-champagne" : "text-accent"} />
@@ -97,7 +131,7 @@ export default function ServicesPage() {
             }`}>
               Secure This Package <ArrowRight size={20} />
             </button>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>

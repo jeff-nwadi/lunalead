@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { cn } from "../../lib/utils";
 import { 
@@ -10,9 +12,10 @@ import {
   Zap, 
   Sparkles, 
   Cpu, 
-  Heart, 
-  ArrowUpRight 
+  Heart 
 } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const tiles = [
   {
@@ -117,43 +120,72 @@ const tiles = [
 ];
 
 export function BentoGrid() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // Header animation
+      gsap.fromTo(headerRef.current?.children || [], 
+        { opacity: 0, y: 20 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.6, 
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: "top 80%",
+          }
+        }
+      );
+
+      // Grid items animation
+      if (gridRef.current) {
+        gsap.fromTo(gridRef.current.children,
+          { opacity: 0, y: 40 },
+          { 
+            opacity: 1, 
+            y: 0, 
+            duration: 0.8, 
+            stagger: 0.1,
+            ease: "expo.out",
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: "top 75%",
+            }
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-32 bg-background relative overflow-hidden">
+    <section ref={sectionRef} className="py-32 bg-background relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-20">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-5xl md:text-6xl font-bold mb-6 clash-display"
-          >
+        <div ref={headerRef} className="text-center max-w-2xl mx-auto mb-20">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 clash-display opacity-0">
             Bespoke Pet Solutions
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-lg opacity-60"
-          >
+          </h2>
+          <p className="text-lg opacity-0">
             Full range of digital architectures to effectively enhance <br className="hidden md:block" /> your pet brand&apos;s global presence.
-          </motion.p>
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-[340px]">
-          {tiles.map((tile, idx) => (
-            <motion.div
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-[340px]">
+          {tiles.map((tile) => (
+            <div
               key={tile.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              viewport={{ once: true }}
               className={cn(
-                "relative transition-all duration-500",
+                "relative transition-all duration-500 opacity-0",
                 tile.className
               )}
             >
               {tile.content}
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
