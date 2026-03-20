@@ -1,10 +1,15 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import PerformanceHalo from "@/components/about/PerformanceHalo";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutPage() {
   const containerRef = useRef<HTMLElement>(null);
@@ -12,42 +17,39 @@ export default function AboutPage() {
   const imageColRef = useRef<HTMLDivElement>(null);
   const philosophyRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(textColRef.current,
-        { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 1, ease: "power3.out" }
-      );
+  useGSAP(() => {
+    gsap.fromTo(textColRef.current,
+      { opacity: 0, x: -30 },
+      { opacity: 1, x: 0, duration: 1, ease: "power3.out" }
+    );
 
-      // Entrance for image
-      gsap.fromTo(imageColRef.current,
-        { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 1, ease: "back.out(1.7)", delay: 0.2 }
-      );
+    gsap.fromTo(imageColRef.current,
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 1, ease: "back.out(1.7)", delay: 0.2 }
+    );
 
-      if (philosophyRef.current) {
-        gsap.fromTo(philosophyRef.current.children,
-          { opacity: 0, y: 30 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.8, 
-            stagger: 0.2,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: philosophyRef.current,
-              start: "top 85%",
-            }
+    if (philosophyRef.current) {
+      const items = gsap.utils.toArray(philosophyRef.current.children);
+      
+      gsap.fromTo(items,
+        { opacity: 0, y: 30 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.8, 
+          stagger: 0.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: philosophyRef.current,
+            start: "top 85%",
           }
-        );
-      }
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
+        }
+      );
+    }
+  }, { scope: containerRef, dependencies: [] });
 
   return (
-    <section ref={containerRef} className="pt-20 pb-20 container mx-auto px-6">
+    <section ref={containerRef} className="pt-36 pb-20 container mx-auto px-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-40">
         <div ref={textColRef} className="opacity-0">
           <span className="text-accent font-bold uppercase tracking-widest text-xs mb-4 block">The Origin Story</span>
@@ -80,19 +82,8 @@ export default function AboutPage() {
           </div>
         </div>
         
-        <div ref={imageColRef} className="relative opacity-0">
-          <div className="aspect-4/5 bg-forest/10 rounded-4xl overflow-hidden rotate-3 border border-forest/10">
-            <Image 
-              src="https://images.unsplash.com/photo-1541591047357-124c9487315b?auto=format&fit=crop&q=80&w=1200" 
-              alt="Studio" 
-              width={800}
-              height={1000}
-              className="w-full h-full object-cover grayscale" 
-              priority
-            />
-          </div>
-          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-accent rounded-full -z-10 blur-3xl opacity-30" />
-          <div className="absolute -top-10 -right-10 w-60 h-60 bg-forest rounded-full -z-10 blur-3xl opacity-20" />
+        <div ref={imageColRef} className="relative opacity-0 flex items-center justify-center py-20 lg:py-0">
+          <PerformanceHalo />
         </div>
       </div>
 

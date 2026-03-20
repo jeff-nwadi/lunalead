@@ -39,13 +39,11 @@ export default function WorkPage() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Header Animation
       gsap.fromTo(headerRef.current,
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 1.2, ease: "expo.out" }
       );
 
-      // Project Items Scroll Animation
       const items = gsap.utils.toArray<HTMLDivElement>(".project-item");
       items.forEach((item) => {
         gsap.fromTo(item,
@@ -62,7 +60,6 @@ export default function WorkPage() {
           }
         );
 
-        // Floating Effect for images
         const img = item.querySelector(".floating-asset");
         if (img) {
           gsap.to(img, {
@@ -73,7 +70,6 @@ export default function WorkPage() {
             ease: "sine.inOut"
           });
           
-          // Mouse tilt effect
           item.addEventListener("mousemove", (e: MouseEvent) => {
             const rect = item.getBoundingClientRect();
             const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -83,7 +79,7 @@ export default function WorkPage() {
               rotateY: x * 15,
               rotateX: -y * 15,
               x: x * 30,
-              y: y * 30 - 20, // offset for floating
+              y: y * 30 - 20, 
               duration: 0.5,
               ease: "power2.out"
             });
@@ -128,16 +124,12 @@ export default function WorkPage() {
           {projects.map((project, idx) => (
             <div
               key={project.id}
-              className={cn(
-                "project-item grid grid-cols-1 lg:grid-cols-2 gap-20 items-center",
-                idx % 2 !== 0 && "lg:flex-row-reverse"
-              )}
+              className="project-item grid grid-cols-1 lg:grid-cols-2 gap-20 items-center"
             >
-              <div className={cn("relative group", idx % 2 !== 0 && "lg:order-2")}>
+              <div className="relative group">
                 <div className="relative z-10 rounded-[2.5rem] overflow-hidden bg-white/5 aspect-4/3 border border-white/10">
                   <div className="absolute inset-0 bg-forest-dark/20 mix-blend-multiply opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
                 </div>
-                {/* Floating Asset */}
                 <div className="floating-asset absolute inset-0 -top-10 -right-10 md:-top-20 md:-right-20 z-20 pointer-events-none drop-shadow-2xl">
                   <div className="relative w-[110%] h-[110%] rounded-3xl overflow-hidden border-4 border-champagne shadow-2xl skew-x-1 skew-y-1">
                     <Image 
@@ -190,9 +182,9 @@ export default function WorkPage() {
         <div className="mt-60 pt-40 border-t border-white/10">
           <div className="max-w-4xl mb-24">
             <span className="text-accent font-black uppercase tracking-[0.4em] text-xs mb-6 block italic underline underline-offset-8">Research & Development</span>
-            <h3 className="text-5xl md:text-7xl font-black text-foreground mb-8 leading-[0.8] clash-display tracking-tighter">
+            <h3 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-8 leading-[0.8] clash-display tracking-wide">
               Defining the <br />
-              <span className="italic">Future of Pet-Tech.</span>
+              <span className="">Future of Pet-Tech.</span>
             </h3>
             <p className="text-xl text-foreground/60">Exploring the intersection of computer vision, bio-data, and luxury pet experiences.</p>
           </div>

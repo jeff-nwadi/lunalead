@@ -18,7 +18,7 @@ export interface Service {
   title: string;
   description: string;
   icon: LucideIcon;
-  span: string; // Tailwind col-span class
+  span: string;
   size: 'small' | 'medium' | 'large';
 }
 
@@ -99,7 +99,7 @@ export const services: Service[] = [
     id: "google-business",
     title: "Google Business",
     description: "Google Business Profile setup - great for SEO!",
-    icon: Building2, // Better representation for Google Business setup
+    icon: Building2, 
     span: "md:col-span-3",
     size: "medium"
   },
