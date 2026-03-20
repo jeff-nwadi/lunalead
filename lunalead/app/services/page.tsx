@@ -50,8 +50,8 @@ export default function ServicesPage() {
     <section className="pt-20 pb-20 container mx-auto px-6">
       <div className="max-w-3xl mb-20">
         <span className="text-accent font-bold uppercase tracking-widest text-xs mb-4 block">Productized Offers</span>
-        <h1 className="text-6xl md:text-8xl font-black mb-10 leading-[0.9]">
-          Elite <span className="text-accent italic">Packages</span> <br />
+        <h1 className="text-5xl md:text-7xl font-black mb-10 leading-[0.9] clash-display">
+          Elite <span className="text-accent ">Packages</span> <br />
           for Growth.
         </h1>
         <p className="text-xl opacity-70 leading-relaxed max-w-2xl">

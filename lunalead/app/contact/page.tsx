@@ -39,11 +39,11 @@ export default function ContactPage() {
             >
               <div className="text-center mb-16">
                 <span className="text-accent font-bold uppercase tracking-widest text-xs mb-4 block">Let&apos;s Connect</span>
-                <h1 className="text-6xl md:text-8xl font-black mb-6">Start a <span className="text-accent italic">Conversation.</span></h1>
+                <h1 className="text-5xl md:text-7xl font-black mb-6 clash-display">Start a <br /><span className="text-accent">Conversation.</span></h1>
                 <p className="text-xl opacity-60">Ready to lead the pack? Tell us about your project.</p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6 bg-forest/5 dark:bg-white/5 p-8 md:p-12 rounded-[40px] border border-forest/10 dark:border-white/10">
+              <form onSubmit={handleSubmit} className="space-y-6 bg-forest/5 dark:bg-white/5 p-8 md:p-12 rounded-4xl border border-forest/10 dark:border-white/10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-bold uppercase tracking-wider opacity-60">Your Name</label>

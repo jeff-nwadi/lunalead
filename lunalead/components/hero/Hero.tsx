@@ -79,7 +79,7 @@ export function Hero() {
             </motion.div>
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-8 leading-[0.9] clash-display text-foreground">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-wide mb-8 leading-[0.9] clash-display text-foreground">
             Digital Direction <br />
             for <span className="text-accent">Elite Pet Brands</span>.
           </h1>

@@ -36,9 +36,9 @@ export default function WorkPage() {
         className="max-w-4xl mb-20"
       >
         <span className="text-accent font-bold uppercase tracking-widest text-xs mb-4 block">Case Studies</span>
-        <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight">
+        <h1 className="text-5xl md:text-7xl font-black mb-8 leading-wide clash-display">
           Selected Works. <br />
-          <span className="text-accent underline decoration-4 underline-offset-8 italic">Precision</span> meets passion.
+          <span className="text-accent underline decoration-4 underline-offset-8">Precision</span> meets passion.
         </h1>
       </motion.div>
 

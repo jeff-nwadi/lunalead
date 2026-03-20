@@ -13,9 +13,9 @@ export default function AboutPage() {
           animate={{ opacity: 1, x: 0 }}
         >
           <span className="text-accent font-bold uppercase tracking-widest text-xs mb-4 block">The Origin Story</span>
-          <h1 className="text-6xl md:text-8xl font-black mb-10 leading-[0.9]">
+          <h1 className="text-5xl md:text-7xl font-black mb-10 leading-[0.9] clash-display">
             Specialized <br />
-            <span className="text-accent italic">by Passion.</span>
+            <span className="text-accent">by Passion.</span>
           </h1>
           <div className="space-y-6 text-xl opacity-70 leading-relaxed">
             <p>
