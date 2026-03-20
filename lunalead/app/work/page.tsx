@@ -39,112 +39,201 @@ export default function WorkPage() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-   
+      // Header Animation
       gsap.fromTo(headerRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1.2, ease: "expo.out" }
       );
-      if (projectsRef.current) {
-        const items = gsap.utils.toArray<HTMLDivElement>(".project-item");
-        items.forEach((item) => {
-          gsap.fromTo(item,
-            { opacity: 0, y: 40 },
-            { 
-              opacity: 1, 
-              y: 0, 
-              duration: 0.8,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: item,
-                start: "top 80%",
-              }
+
+      // Project Items Scroll Animation
+      const items = gsap.utils.toArray<HTMLDivElement>(".project-item");
+      items.forEach((item) => {
+        gsap.fromTo(item,
+          { opacity: 0, y: 50 },
+          { 
+            opacity: 1, 
+            y: 0, 
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 85%",
             }
-          );
-        });
-      }
+          }
+        );
+
+        // Floating Effect for images
+        const img = item.querySelector(".floating-asset");
+        if (img) {
+          gsap.to(img, {
+            y: -20,
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+          });
+          
+          // Mouse tilt effect
+          item.addEventListener("mousemove", (e: MouseEvent) => {
+            const rect = item.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            
+            gsap.to(img, {
+              rotateY: x * 15,
+              rotateX: -y * 15,
+              x: x * 30,
+              y: y * 30 - 20, // offset for floating
+              duration: 0.5,
+              ease: "power2.out"
+            });
+          });
+          
+          item.addEventListener("mouseleave", () => {
+            gsap.to(img, {
+              rotateY: 0,
+              rotateX: 0,
+              x: 0,
+              y: -20,
+              duration: 1,
+              ease: "elastic.out(1, 0.3)"
+            });
+          });
+        }
+      });
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={containerRef} className="pt-20 pb-20 container mx-auto px-6">
-      <div
-        ref={headerRef}
-        className="max-w-4xl mb-20 opacity-0"
-      >
-        <span className="text-accent font-bold uppercase tracking-widest text-xs mb-4 block">Case Studies</span>
-        <h1 className="text-5xl md:text-7xl font-black mb-8 leading-wide clash-display">
-          Selected Works. <br />
-          <span className="text-accent underline decoration-4 underline-offset-8">Precision</span> meets passion.
-        </h1>
-      </div>
-
-      <div ref={projectsRef} className="space-y-40">
-        {projects.map((project, idx) => (
-          <div
-            key={project.id}
-            className={cn(
-              "project-item grid grid-cols-1 lg:grid-cols-2 gap-20 items-center opacity-0",
-              idx % 2 !== 0 && "lg:flex-row-reverse"
-            )}
-          >
-            <div className={cn(idx % 2 !== 0 && "lg:order-2")}>
-              <div className="relative group overflow-hidden rounded-4xl aspect-4/3 bg-forest/10 border border-forest/10">
-                <Image 
-                  src={project.image} 
-                  alt={project.title} 
-                  width={1200}
-                  height={900}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                  priority={idx === 0}
-                />
-                <div className="absolute inset-0 bg-forest/20 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500" />
-              </div>
-            </div>
-
-            <div>
-              <p className="text-accent font-bold mb-4">{project.subtitle}</p>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">{project.headline}</h2>
-              <div className="space-y-6 mb-10 opacity-70 leading-relaxed text-lg">
-                <p><strong>The Problem:</strong> {project.problem}</p>
-                <p><strong>The Solution:</strong> {project.solution}</p>
-              </div>
-              <div className="flex flex-wrap gap-3 mb-12">
-                {project.stack.map(s => (
-                  <span key={s} className="px-4 py-2 bg-foreground/5 rounded-full text-xs font-bold uppercase">{s}</span>
-                ))}
-              </div>
-              <button className="flex items-center gap-2 group text-xl font-bold">
-                View Full Case Study <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-40">
-        <div className="flex justify-between items-end mb-12">
-          <div>
-            <h3 className="text-3xl font-bold mb-4 italic">Concept Work</h3>
-            <p className="opacity-60 max-w-sm">Pushing the boundaries of pet-tech digital design.</p>
-          </div>
+    <section ref={containerRef} className="bg-background pt-32 pb-40">
+      <div className="container mx-auto px-6">
+        <div
+          ref={headerRef}
+          className="max-w-4xl mb-32"
+        >
+          <span className="text-accent font-bold uppercase tracking-[0.5em] text-xs mb-6 block">Case Studies</span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-10 leading-[0.8] clash-display text-foreground tracking-wide">
+            Selected <br />
+            <span className="text-accent">Works.</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-foreground/60 max-w-2xl leading-relaxed">
+            Where precision engineering meets bespoke brand design. 
+            We build digital flagships that scale with your vision.
+          </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="aspect-square bg-forest/5 rounded-4xl border border-forest/5 overflow-hidden group relative">
-              <Image 
-                src={`https://images.unsplash.com/photo-1548191265-cc70d3d45ba1?auto=format&fit=crop&q=80&w=800&sig=${i}`} 
-                alt="Concept" 
-                width={800}
-                height={800}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-forest/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                <p className="text-champagne font-bold">Luxury Pet UI Concept {i}</p>
+
+        <div ref={projectsRef} className="space-y-60">
+          {projects.map((project, idx) => (
+            <div
+              key={project.id}
+              className={cn(
+                "project-item grid grid-cols-1 lg:grid-cols-2 gap-20 items-center",
+                idx % 2 !== 0 && "lg:flex-row-reverse"
+              )}
+            >
+              <div className={cn("relative group", idx % 2 !== 0 && "lg:order-2")}>
+                <div className="relative z-10 rounded-[2.5rem] overflow-hidden bg-white/5 aspect-4/3 border border-white/10">
+                  <div className="absolute inset-0 bg-forest-dark/20 mix-blend-multiply opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
+                </div>
+                {/* Floating Asset */}
+                <div className="floating-asset absolute inset-0 -top-10 -right-10 md:-top-20 md:-right-20 z-20 pointer-events-none drop-shadow-2xl">
+                  <div className="relative w-[110%] h-[110%] rounded-3xl overflow-hidden border-4 border-champagne shadow-2xl skew-x-1 skew-y-1">
+                    <Image 
+                      src={project.image} 
+                      alt={project.title} 
+                      width={1200}
+                      height={900}
+                      className="w-full h-full object-cover" 
+                      priority={idx === 0}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative z-30">
+                <div className="mb-6 flex items-center gap-4">
+                  <span className="h-px w-8 bg-accent" />
+                  <p className="text-accent font-black tracking-widest uppercase text-sm">{project.subtitle}</p>
+                </div>
+                <h2 className="text-4xl md:text-6xl font-black mb-8 text-foreground leading-[0.9] clash-display">{project.headline}</h2>
+                
+                <div className="grid gap-6 mb-12">
+                  <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+                    <p className="text-[10px] uppercase tracking-widest text-foreground/40 mb-2 font-bold">The Problem</p>
+                    <p className="text-foreground/80 font-medium leading-relaxed">{project.problem}</p>
+                  </div>
+                  <div className="p-6 rounded-2xl bg-accent text-champagne shadow-xl shadow-accent/20">
+                    <p className="text-[10px] uppercase tracking-widest text-white/40 mb-2 font-bold">The Solution</p>
+                    <p className="font-medium leading-relaxed">{project.solution}</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-3 mb-12">
+                  {project.stack.map(s => (
+                    <span key={s} className="px-4 py-2 border border-white/10 rounded-full text-[10px] font-black uppercase tracking-wider text-foreground/60">{s}</span>
+                  ))}
+                </div>
+                
+                <button className="flex items-center gap-3 group text-xl font-black text-foreground hover:text-accent transition-colors">
+                  View Full Case Study 
+                  <div className="p-3 rounded-full bg-foreground group-hover:bg-accent text-background transition-all group-hover:translate-x-1 group-hover:-translate-y-1">
+                    <ArrowUpRight size={20} />
+                  </div>
+                </button>
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-60 pt-40 border-t border-white/10">
+          <div className="max-w-4xl mb-24">
+            <span className="text-accent font-black uppercase tracking-[0.4em] text-xs mb-6 block italic underline underline-offset-8">Research & Development</span>
+            <h3 className="text-5xl md:text-7xl font-black text-foreground mb-8 leading-[0.8] clash-display tracking-tighter">
+              Defining the <br />
+              <span className="italic">Future of Pet-Tech.</span>
+            </h3>
+            <p className="text-xl text-foreground/60">Exploring the intersection of computer vision, bio-data, and luxury pet experiences.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+            <div className="md:col-span-4 aspect-video bg-white/5 rounded-[2.5rem] p-12 flex flex-col justify-end group overflow-hidden relative border border-white/10">
+              <div className="absolute inset-0 opacity-40 group-hover:scale-110 transition-transform duration-700">
+                 <Image 
+                   src="https://images.unsplash.com/photo-1548191265-cc70d3d45ba1?auto=format&fit=crop&q=80&w=1200" 
+                   alt="Smart Collar" 
+                   fill
+                   className="object-cover"
+                 />
+              </div>
+              <div className="relative z-10">
+                <span className="px-3 py-1 bg-accent rounded-full text-[10px] font-black uppercase tracking-widest text-champagne mb-4 inline-block">Prototyping</span>
+                <h4 className="text-3xl font-black text-champagne mb-4 clash-display">Smart Collar Dashboard</h4>
+                <p className="text-champagne/60 max-w-md">Real-time biomechanic visualization for high-performance service animals and elite pets.</p>
+              </div>
+            </div>
+            
+            <div className="md:col-span-2 aspect-square md:aspect-auto bg-accent rounded-[2.5rem] p-10 flex flex-col justify-end text-champagne shadow-2xl shadow-accent/20">
+              <h4 className="text-2xl font-black mb-4 clash-display leading-tight">Premium Kibble <br />Subscription Flow</h4>
+              <p className="text-white/60 text-sm">Optimizing D2C conversion for personalized luxury pet nutrition brands.</p>
+            </div>
+
+            <div className="md:col-span-2 aspect-square bg-white/5 border border-white/10 rounded-[2.5rem] p-10 flex flex-col justify-center items-center text-center">
+              <span className="text-4xl mb-4 italic text-white/10">03</span>
+              <h4 className="text-xl font-bold text-white/40 clash-display">Pet-Biometric <br />Security Keys</h4>
+            </div>
+
+            <div className="md:col-span-4 aspect-21/9 bg-white/5 border border-white/10 rounded-[2.5rem] p-12 flex items-center justify-between group cursor-pointer hover:border-accent transition-colors">
+              <div>
+                <h4 className="text-3xl font-black text-foreground clash-display">Join the Alpha</h4>
+                <p className="text-foreground/60">Partner with our studio to build the next industry leader.</p>
+              </div>
+              <div className="h-16 w-16 rounded-full bg-accent flex items-center justify-center text-champagne group-hover:scale-110 transition-all">
+                <ArrowUpRight size={32} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

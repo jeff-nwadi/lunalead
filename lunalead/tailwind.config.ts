@@ -18,6 +18,7 @@ const config: Config = {
       fontFamily: {
         serif: ["var(--font-serif)", "serif"],
         sans: ["var(--font-sans)", "sans-serif"],
+        clash: ["var(--font-clash)", "sans-serif"],
       },
       gridTemplateColumns: {
         'bento': 'repeat(auto-fill, minmax(280px, 1fr))',
