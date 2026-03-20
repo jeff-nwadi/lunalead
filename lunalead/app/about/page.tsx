@@ -14,7 +14,6 @@ export default function AboutPage() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Entrance for text
       gsap.fromTo(textColRef.current,
         { opacity: 0, x: -30 },
         { opacity: 1, x: 0, duration: 1, ease: "power3.out" }
@@ -26,7 +25,6 @@ export default function AboutPage() {
         { opacity: 1, scale: 1, duration: 1, ease: "back.out(1.7)", delay: 0.2 }
       );
 
-      // Entrance for philosophy section
       if (philosophyRef.current) {
         gsap.fromTo(philosophyRef.current.children,
           { opacity: 0, y: 30 },
@@ -83,7 +81,7 @@ export default function AboutPage() {
         </div>
         
         <div ref={imageColRef} className="relative opacity-0">
-          <div className="aspect-4/5 bg-forest/10 rounded-[60px] overflow-hidden rotate-3 border border-forest/10">
+          <div className="aspect-4/5 bg-forest/10 rounded-4xl overflow-hidden rotate-3 border border-forest/10">
             <Image 
               src="https://images.unsplash.com/photo-1541591047357-124c9487315b?auto=format&fit=crop&q=80&w=1200" 
               alt="Studio" 

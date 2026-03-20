@@ -23,14 +23,14 @@ const tiles = [
     title: "Integrations",
     subtitle: "Seamless pet-tech connectivity.",
     content: (
-      <div className="h-full p-8 bg-background border border-foreground/10 rounded-4xl flex flex-col justify-between group hover:shadow-2xl transition-all duration-500">
+      <div className="h-full p-8 bg-champagne text-forest border border-forest/10 rounded-4xl flex flex-col justify-between group hover:shadow-2xl transition-all duration-500">
         <div>
           <h3 className="text-2xl font-bold mb-2">Integrations</h3>
-          <p className="text-sm opacity-60">Easily integrations of third party apps.</p>
+          <p className="text-sm font-bold opacity-80">Easily integrations of third party apps.</p>
         </div>
         <div className="flex gap-4 mt-8">
           {[Stethoscope, Dog, Database].map((Icon, i) => (
-            <div key={i} className="w-14 h-14 rounded-full bg-forest/5 dark:bg-white/5 flex items-center justify-center text-accent group-hover:scale-110 transition-transform duration-500">
+            <div key={i} className="w-14 h-14 rounded-full bg-forest/10 flex items-center justify-center text-forest group-hover:scale-110 transition-transform duration-500">
               <Icon size={24} />
             </div>
           ))}
@@ -49,9 +49,18 @@ const tiles = [
           alt="Impact" 
           width={800}
           height={600}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+          className="w-full h-full object-cover rounded-4xl group-hover:scale-110 transition-transform duration-700" 
         />
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
+        <div className="absolute top-8 right-8 flex gap-2 z-10">
+          {[1,2,3,4].map((i) => (
+            <div key={i} className="w-10 h-10 rounded-full bg-green-500/20 backdrop-blur-md border border-green-500/30 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full border-2 border-green-500 flex items-center justify-center">
+                <span className="text-[8px] font-black text-white">100</span>
+              </div>
+            </div>
+          ))}
+        </div>
         <div className="absolute bottom-0 left-0 p-8 z-10">
           <h3 className="text-xl font-bold text-white leading-tight">
             Small changes and big impact <br /> on the way!
@@ -71,7 +80,7 @@ const tiles = [
           alt="Brand DNA" 
           width={800}
           height={1200}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+          className="w-full h-full object-cover rounded-4xl group-hover:scale-105 transition-transform duration-1000" 
         />
         <div className="absolute top-8 left-8">
           <span className="px-6 py-3 bg-white/90 backdrop-blur-md text-black font-black italic rounded-xl text-xl uppercase tracking-tighter shadow-xl">
@@ -105,13 +114,13 @@ const tiles = [
     id: 5,
     title: "Focus",
     content: (
-      <div className="h-full p-8 bg-accent/10 dark:bg-accent/5 rounded-4xl border border-accent/20 flex flex-col justify-between group hover:bg-accent/20 transition-all duration-500">
-        <div className="w-16 h-16 rounded-2xl bg-accent text-white flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform duration-500">
+      <div className="h-full p-8 bg-champagne text-forest rounded-4xl border border-forest/10 flex flex-col justify-between group hover:bg-white transition-all duration-500">
+        <div className="w-16 h-16 rounded-2xl bg-forest text-champagne flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform duration-500">
           <Heart size={32} fill="currentColor" />
         </div>
         <div>
           <h3 className="text-2xl font-bold mb-2">Our Focus</h3>
-          <p className="text-sm opacity-60">Handcrafted solutions for elite pet entrepreneurs.</p>
+          <p className="text-sm font-bold opacity-80">Handcrafted solutions for elite pet entrepreneurs.</p>
         </div>
       </div>
     ),
@@ -126,7 +135,6 @@ export function BentoGrid() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Header animation
       gsap.fromTo(headerRef.current?.children || [], 
         { opacity: 0, y: 20 },
         { 
@@ -141,7 +149,6 @@ export function BentoGrid() {
         }
       );
 
-      // Grid items animation
       if (gridRef.current) {
         gsap.fromTo(gridRef.current.children,
           { opacity: 0, y: 40 },

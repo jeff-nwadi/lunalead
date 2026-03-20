@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { useStore } from "@/store/useStore";
+import Magnetic from "./Magnetic";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -41,10 +42,10 @@ export function Header() {
             width={160} 
             height={40} 
             className="h-8 w-auto"
+            priority
           />
         </Link>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
             <Link
@@ -62,15 +63,16 @@ export function Header() {
           >
             {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
           </button>
-          <Link
-            href="/contact"
-            className="px-6 py-2.5 bg-foreground text-background font-semibold rounded-full hover:opacity-90 transition-opacity"
-          >
-            Book a Strategy Call
-          </Link>
+          <Magnetic>
+            <Link
+              href="/contact"
+              className="px-6 py-2.5 bg-foreground text-background font-semibold rounded-full hover:opacity-90 transition-opacity"
+            >
+              Book a Strategy Call
+            </Link>
+          </Magnetic>
         </div>
 
-        {/* Mobile Toggle */}
         <div className="md:hidden flex items-center space-x-4">
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -84,7 +86,6 @@ export function Header() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div
           ref={menuRef}
@@ -100,13 +101,15 @@ export function Header() {
               {link.name}
             </Link>
           ))}
-          <Link
-            href="/contact"
-            onClick={() => setMenuOpen(false)}
-            className="w-full py-4 bg-foreground text-background font-bold text-center rounded-xl"
-          >
-            Book a Strategy Call
-          </Link>
+          <Magnetic>
+            <Link
+              href="/contact"
+              onClick={() => setMenuOpen(false)}
+              className="w-full py-4 bg-foreground text-background font-bold text-center rounded-xl"
+            >
+              Book a Strategy Call
+            </Link>
+          </Magnetic>
         </div>
       )}
     </header>

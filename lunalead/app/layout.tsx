@@ -52,7 +52,7 @@ export default function RootLayout({
         <Providers>
           <div className="grain-effect" />
           <Header />
-          <main className="flex-grow">{children}</main>
+          <main className="grow">{children}</main>
           <Footer />
         </Providers>
       </body>

@@ -7,7 +7,6 @@ export default function HomePage() {
       <Hero />
       <BentoGrid />
       
-      {/* Service Highlight Section */}
       <section className="py-20 bg-forest/5 dark:bg-white/5 border-y border-forest/10 dark:border-white/10">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl">

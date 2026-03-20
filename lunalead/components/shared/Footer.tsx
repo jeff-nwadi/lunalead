@@ -1,13 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Instagram, Linkedin, ArrowUpRight } from "lucide-react";
+import Magnetic from "./Magnetic";
 
 export function Footer() {
   return (
     <footer className="w-full bg-forest dark:bg-forest text-champagne pt-20 pb-10 px-6">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-20">
-          {/* Logo & Info */}
           <div className="lg:col-span-2">
             <div className="mb-6">
               <Image 
@@ -16,6 +18,7 @@ export function Footer() {
                 width={200} 
                 height={50} 
                 className="h-10 w-auto"
+                priority
               />
             </div>
             <p className="text-champagne/60 max-w-sm mb-8">
@@ -31,7 +34,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-widest text-champagne/40 mb-6">Explore</h3>
             <ul className="space-y-4">
@@ -41,12 +43,13 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-widest text-champagne/40 mb-6">Let&apos;s Talk</h3>
-            <Link href="/contact" className="group flex items-center text-xl font-medium hover:text-accent transition-colors">
-              Book a Call <ArrowUpRight className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </Link>
+            <Magnetic>
+              <Link href="/contact" className="group flex items-center text-xl font-medium hover:text-accent transition-colors w-fit">
+                Book a Call <ArrowUpRight className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </Link>
+            </Magnetic>
             <p className="mt-4 text-champagne/60 text-sm">hello@lunalead.com</p>
           </div>
         </div>

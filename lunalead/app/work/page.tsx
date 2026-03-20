@@ -90,7 +90,7 @@ export default function WorkPage() {
             )}
           >
             <div className={cn(idx % 2 !== 0 && "lg:order-2")}>
-              <div className="relative group overflow-hidden rounded-3xl aspect-4/3 bg-forest/10 border border-forest/10">
+              <div className="relative group overflow-hidden rounded-4xl aspect-4/3 bg-forest/10 border border-forest/10">
                 <Image 
                   src={project.image} 
                   alt={project.title} 
@@ -123,7 +123,6 @@ export default function WorkPage() {
         ))}
       </div>
 
-      {/* Concept Work Grid */}
       <div className="mt-40">
         <div className="flex justify-between items-end mb-12">
           <div>
@@ -133,7 +132,7 @@ export default function WorkPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="aspect-square bg-forest/5 rounded-2xl border border-forest/5 overflow-hidden group relative">
+            <div key={i} className="aspect-square bg-forest/5 rounded-4xl border border-forest/5 overflow-hidden group relative">
               <Image 
                 src={`https://images.unsplash.com/photo-1548191265-cc70d3d45ba1?auto=format&fit=crop&q=80&w=800&sig=${i}`} 
                 alt="Concept" 

@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import { Bone, PawPrint, Heart, Star, Sparkles } from "lucide-react";
+import Magnetic from "../shared/Magnetic";
 
 interface FloatingElementProps {
   children: React.ReactNode;
@@ -19,13 +20,11 @@ const FloatingElement = ({ children, className, delay = 0, duration = 4, yOffset
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Entry animation
       gsap.fromTo(elementRef.current, 
         { scale: 0, opacity: 0 },
         { scale: 1, opacity: 1, duration: 1, delay, ease: "power3.out" }
       );
 
-      // Floating animation
       gsap.to(elementRef.current, {
         y: -yOffset,
         duration: duration,
@@ -35,7 +34,6 @@ const FloatingElement = ({ children, className, delay = 0, duration = 4, yOffset
         delay
       });
 
-      // Rotation animation
       gsap.to(elementRef.current, {
         rotate: rotateOffset,
         duration: duration * 1.5,
@@ -69,7 +67,6 @@ export function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-      // Title and Logo entrance
       tl.fromTo(logoRef.current, 
         { scale: 0.8, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.8, delay: 0.2 }
@@ -90,7 +87,6 @@ export function Hero() {
         "-=0.8"
       );
 
-      // Background blurs animation
       gsap.to(blur1Ref.current, {
         scale: 1.2,
         opacity: 0.1,
@@ -116,7 +112,6 @@ export function Hero() {
   return (
     <section ref={containerRef} className="relative pt-40 pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh]">
       <div className="container mx-auto px-6 relative z-10 text-center">
-        {/* Floating Icons Background */}
         <div className="absolute inset-0 -z-10 pointer-events-none overflow-visible">
           <FloatingElement className="absolute top-[10%] left-[10%] text-accent/20" delay={0.2} duration={5} yOffset={30} rotateOffset={10}>
             <Bone size={64} className="rotate-45" />
@@ -157,9 +152,11 @@ export function Hero() {
           </p>
           
           <div ref={buttonsRef} className="mt-14 flex flex-wrap gap-6 justify-center opacity-0">
-            <button className="px-10 py-5 bg-foreground text-background font-bold rounded-full hover:scale-105 hover:shadow-2xl transition-all shadow-xl">
-              Explore Our Work
-            </button>
+            <Magnetic>
+              <button className="px-10 py-5 bg-foreground text-background font-bold rounded-full hover:shadow-2xl transition-all shadow-xl">
+                Explore Our Work
+              </button>
+            </Magnetic>
             <button className="px-10 py-5 border border-foreground/30 rounded-full font-bold hover:bg-foreground/5 transition-all">
               Our Methodology
             </button>
@@ -167,7 +164,6 @@ export function Hero() {
         </div>
       </div>
       
-      {/* Dynamic Background Blurs */}
       <div 
         ref={blur1Ref}
         className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent blur-[150px] -z-10 rounded-full opacity-[0.05]" 

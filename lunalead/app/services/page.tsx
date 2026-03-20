@@ -56,13 +56,11 @@ export default function ServicesPage() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // Header entrance
       gsap.fromTo(headerRef.current,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
       );
 
-      // Service cards entrance
       if (gridRef.current) {
         gsap.fromTo(gridRef.current.children,
           { opacity: 0, y: 30 },
@@ -102,7 +100,7 @@ export default function ServicesPage() {
         {services.map((service, i) => (
           <div
             key={service.title}
-            className={`p-10 rounded-3xl border opacity-0 ${
+            className={`p-10 rounded-4xl border opacity-0 ${
               service.accent 
               ? "bg-accent text-champagne border-accent scale-105 shadow-2xl z-10" 
               : "bg-forest/5 dark:bg-white/5 border-forest/10 dark:border-white/10"

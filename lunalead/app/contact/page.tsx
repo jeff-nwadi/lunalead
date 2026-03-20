@@ -35,7 +35,6 @@ export default function ContactPage() {
     e.preventDefault();
     setLoading(true);
     
-    // Simulate API call
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
@@ -110,7 +109,7 @@ export default function ContactPage() {
           <div
             ref={successRef}
             key="success"
-            className="text-center py-20 bg-accent text-champagne rounded-[60px] shadow-2xl opacity-0"
+            className="text-center py-20 bg-accent text-champagne rounded-4xl shadow-2xl opacity-0"
           >
             <div className="w-24 h-24 bg-champagne/20 rounded-full flex items-center justify-center mx-auto mb-8">
               <CheckCircle2 size={48} />

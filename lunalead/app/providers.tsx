@@ -10,14 +10,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const { setMounted } = useStore();
 
   useEffect(() => {
-    setMounted(true); // Global store sync
-    setMountedLocal(true); // Local guard
+    setMounted(true); 
+    setMountedLocal(true);
   }, [setMounted]);
-
-  // Keep hydrate guard for themes and other client-side only features
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <ThemeProvider
@@ -27,7 +22,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       storageKey="lunalead-theme"
     >
       <ReactLenis root>
-        {children}
+        {mounted ? children : null}
       </ReactLenis>
     </ThemeProvider>
   );
