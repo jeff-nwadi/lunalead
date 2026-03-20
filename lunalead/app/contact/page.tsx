@@ -75,15 +75,6 @@ export default function ContactPage() {
               </div>
               
               <div className="space-y-2">
-                <label className="text-sm font-bold uppercase tracking-wider opacity-60">Scale of Project</label>
-                <select className="w-full bg-background border border-forest/10 rounded-2xl p-4 focus:border-accent outline-none transition-colors appearance-none">
-                  <option>Brand Launchpad ($900+)</option>
-                  <option>High-Performance Dev ($1,500+)</option>
-                  <option>Full Agency Experience ($2,000+)</option>
-                </select>
-              </div>
-
-              <div className="space-y-2">
                 <label className="text-sm font-bold uppercase tracking-wider opacity-60">Message</label>
                 <textarea required rows={5} className="w-full bg-background border border-forest/10 rounded-2xl p-4 focus:border-accent outline-none transition-colors resize-none" placeholder="Tell us about your digital direction..."></textarea>
               </div>
