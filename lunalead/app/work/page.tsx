@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import { cn } from "../../lib/utils";
 
 const projects = [
@@ -56,10 +57,13 @@ export default function WorkPage() {
           >
             <div className={cn(idx % 2 !== 0 && "lg:order-2")}>
               <div className="relative group overflow-hidden rounded-3xl aspect-[4/3] bg-forest/10 border border-forest/10">
-                <img 
+                <Image 
                   src={project.image} 
                   alt={project.title} 
+                  width={1200}
+                  height={900}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                  priority={idx === 0}
                 />
                 <div className="absolute inset-0 bg-forest/20 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500" />
               </div>
@@ -96,9 +100,11 @@ export default function WorkPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="aspect-square bg-forest/5 rounded-2xl border border-forest/5 overflow-hidden group relative">
-              <img 
+              <Image 
                 src={`https://images.unsplash.com/photo-1548191265-cc70d3d45ba1?auto=format&fit=crop&q=80&w=800&sig=${i}`} 
                 alt="Concept" 
+                width={800}
+                height={800}
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-forest/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">

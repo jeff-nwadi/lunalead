@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 export default function AboutPage() {
@@ -48,10 +49,13 @@ export default function AboutPage() {
           className="relative"
         >
           <div className="aspect-[4/5] bg-forest/10 rounded-[60px] overflow-hidden rotate-3 border border-forest/10">
-            <img 
+            <Image 
               src="https://images.unsplash.com/photo-1541591047357-124c9487315b?auto=format&fit=crop&q=80&w=1200" 
               alt="Studio" 
+              width={800}
+              height={1000}
               className="w-full h-full object-cover grayscale" 
+              priority
             />
           </div>
           <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-accent rounded-full -z-10 blur-3xl opacity-30" />

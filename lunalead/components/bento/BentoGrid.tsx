@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { cn } from "../../lib/utils";
 import { 
   Stethoscope, 
@@ -40,9 +41,11 @@ const tiles = [
     title: "Impact",
     content: (
       <div className="h-full relative overflow-hidden rounded-4xl group">
-        <img 
+        <Image 
           src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&q=80&w=800" 
           alt="Impact" 
+          width={800}
+          height={600}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
         />
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
@@ -60,9 +63,11 @@ const tiles = [
     title: "Brand DNA",
     content: (
       <div className="h-full relative overflow-hidden rounded-4xl group">
-        <img 
+        <Image 
           src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&q=80&w=800" 
           alt="Brand DNA" 
+          width={800}
+          height={1200}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
         />
         <div className="absolute top-8 left-8">

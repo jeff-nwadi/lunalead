@@ -17,23 +17,18 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   }, [setMounted]);
 
   return (
-    <>
-      <AnimatePresence mode="wait">
-        {!mounted && <LoadingState key="loader" />}
-      </AnimatePresence>
-      
-      {mounted ? (
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="dark"
-          enableSystem={false}
-          storageKey="lunalead-theme"
-        >
-          <ReactLenis root>{children}</ReactLenis>
-        </ThemeProvider>
-      ) : (
-        <div className="opacity-0">{children}</div>
-      )}
-    </>
+    <ThemeProvider
+      attribute="data-theme"
+      defaultTheme="dark"
+      enableSystem={false}
+      storageKey="lunalead-theme"
+    >
+      <ReactLenis root>
+        <AnimatePresence mode="wait">
+          {!mounted && <LoadingState key="loader" />}
+        </AnimatePresence>
+        {children}
+      </ReactLenis>
+    </ThemeProvider>
   );
 }
