@@ -116,6 +116,26 @@ export default function WorkContent() {
                 key={project._id}
                 className="project-item grid grid-cols-1 lg:grid-cols-2 gap-20 items-center"
               >
+
+                <div className="relative group">
+                  <div className="relative z-10 rounded-[2.5rem] overflow-hidden bg-white/5 aspect-4/3 border border-white/10">
+                    <div className="absolute inset-0 bg-forest-dark/20 mix-blend-multiply opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
+                  </div>
+                  <div className="floating-asset absolute inset-0 -top-10 -right-10 md:-top-20 md:-right-20 z-20 pointer-events-none drop-shadow-2xl">
+                    <div className="relative w-[110%] h-[110%] rounded-3xl overflow-hidden border-4 border-champagne shadow-2xl skew-x-1 skew-y-1">
+                      <Image 
+                        src={urlFor(project.mainImage).url()} 
+                        alt={project.title} 
+                        width={1200}
+                        height={900}
+                        className="w-full h-full object-cover" 
+                        priority={idx === 0}
+                      />
+                      <div className="absolute inset-0 bg-linear-to-tr from-forest-dark/60 via-forest-dark/10 to-transparent" />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="relative z-30">
                   <div className="mb-6 flex items-center gap-4">
                     <span className="h-px w-8 bg-accent" />
@@ -153,24 +173,6 @@ export default function WorkContent() {
                       </div>
                     </a>
                   )}
-                </div>
-
-                <div className="relative group">
-                  <div className="relative z-10 rounded-[2.5rem] overflow-hidden bg-white/5 aspect-4/3 border border-white/10">
-                    <div className="absolute inset-0 bg-forest-dark/20 mix-blend-multiply opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
-                  </div>
-                  <div className="floating-asset absolute inset-0 -top-10 -right-10 md:-top-20 md:-right-20 z-20 pointer-events-none drop-shadow-2xl">
-                    <div className="relative w-[110%] h-[110%] rounded-3xl overflow-hidden border-4 border-champagne shadow-2xl skew-x-1 skew-y-1">
-                      <Image 
-                        src={urlFor(project.mainImage).url()} 
-                        alt={project.title} 
-                        width={1200}
-                        height={900}
-                        className="w-full h-full object-cover" 
-                        priority={idx === 0}
-                      />
-                    </div>
-                  </div>
                 </div>
               </div>
             ))
