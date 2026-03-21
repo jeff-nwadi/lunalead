@@ -8,10 +8,14 @@ import confetti from "canvas-confetti";
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   
   const formRef = useRef<HTMLDivElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const messageRef = useRef<HTMLTextAreaElement>(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -66,18 +70,22 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold uppercase tracking-wider opacity-60">Your Name</label>
-                  <input required type="text" className="w-full bg-background border border-forest/10 rounded-2xl p-4 focus:border-accent outline-none transition-colors" placeholder="John Doe" />
+                  <input ref={nameRef} required type="text" className="w-full bg-background border border-forest/10 rounded-2xl p-4 focus:border-accent outline-none transition-colors" placeholder="John Doe" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold uppercase tracking-wider opacity-60">Email Address</label>
-                  <input required type="email" className="w-full bg-background border border-forest/10 rounded-2xl p-4 focus:border-accent outline-none transition-colors" placeholder="john@petbrand.com" />
+                  <input ref={emailRef} required type="email" className="w-full bg-background border border-forest/10 rounded-2xl p-4 focus:border-accent outline-none transition-colors" placeholder="john@petbrand.com" />
                 </div>
               </div>
               
               <div className="space-y-2">
                 <label className="text-sm font-bold uppercase tracking-wider opacity-60">Message</label>
-                <textarea required rows={5} className="w-full bg-background border border-forest/10 rounded-2xl p-4 focus:border-accent outline-none transition-colors resize-none" placeholder="Tell us about your digital direction..."></textarea>
+                <textarea ref={messageRef} required rows={5} className="w-full bg-background border border-forest/10 rounded-2xl p-4 focus:border-accent outline-none transition-colors resize-none" placeholder="Tell us about your digital direction..."></textarea>
               </div>
+
+              {error && (
+                <p className="text-red-400 text-sm font-bold text-center">{error}</p>
+              )}
 
               <button 
                 disabled={loading}
