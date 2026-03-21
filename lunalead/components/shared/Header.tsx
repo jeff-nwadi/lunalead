@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -21,16 +21,21 @@ export function Header() {
   const { isMounted, isMenuOpen, toggleMenu, setMenuOpen } = useStore();
   const menuRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isMenuOpen && menuRef.current) {
-      gsap.fromTo(menuRef.current,
-        { opacity: 0, y: -20 },
+      gsap.set(menuRef.current, { opacity: 0, y: -20 });
+      gsap.to(menuRef.current,
         { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }
       );
     }
   }, [isMenuOpen]);
 
-  if (!isMounted) return null;
+  const [localMounted, setLocalMounted] = useState(false);
+  useEffect(() => {
+    setLocalMounted(true);
+  }, []);
+
+  if (!isMounted && !localMounted) return null;
 
   return (
     <header className="fixed top-0 left-0 w-full z-40 bg-background/80 backdrop-blur-md border-b border-forest/10 dark:border-champagne/10">
@@ -89,7 +94,7 @@ export function Header() {
       {isMenuOpen && (
         <div
           ref={menuRef}
-          className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-forest/10 dark:border-champagne/10 p-6 flex flex-col space-y-4 shadow-xl opacity-0"
+          className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-forest/10 dark:border-champagne/10 p-6 flex flex-col space-y-4 shadow-xl"
         >
           {navLinks.map((link) => (
             <Link

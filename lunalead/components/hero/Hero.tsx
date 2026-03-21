@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import { Bone, PawPrint, Heart, Star, Sparkles } from "lucide-react";
@@ -18,13 +18,14 @@ interface FloatingElementProps {
 const FloatingElement = ({ children, className, delay = 0, duration = 4, yOffset = 20, rotateOffset = 5 }: FloatingElementProps) => {
   const elementRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
       const ctx = gsap.context(() => {
-        gsap.fromTo(elementRef.current, 
-          { scale: 0, opacity: 0 },
+        gsap.set(elementRef.current, { opacity: 0, scale: 0 });
+        
+        gsap.to(elementRef.current, 
           { scale: 1, opacity: 1, duration: 1, delay, ease: "power3.out" }
         );
 
@@ -57,7 +58,7 @@ const FloatingElement = ({ children, className, delay = 0, duration = 4, yOffset
   }, [delay, duration, yOffset, rotateOffset]);
 
   return (
-    <div ref={elementRef} className={className} style={{ opacity: 0 }}>
+    <div ref={elementRef} className={className}>
       {children}
     </div>
   );
@@ -72,26 +73,28 @@ export function Hero() {
   const blur1Ref = useRef<HTMLDivElement>(null);
   const blur2Ref = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-      tl.fromTo(logoRef.current, 
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.8, delay: 0.2 }
+      // Initial state set via JS for progressive enhancement
+      gsap.set([logoRef.current, titleRef.current, descriptionRef.current, buttonsRef.current], { 
+        opacity: 0,
+        y: 30
+      });
+
+      tl.to(logoRef.current, 
+        { scale: 1, opacity: 1, duration: 0.8, delay: 0.2, y: 0 }
       )
-      .fromTo(titleRef.current,
-        { y: 30, opacity: 0 },
+      .to(titleRef.current,
         { y: 0, opacity: 1, duration: 1 },
         "-=0.4"
       )
-      .fromTo(descriptionRef.current,
-        { opacity: 0 },
+      .to(descriptionRef.current,
         { opacity: 0.7, duration: 1 },
         "-=0.6"
       )
-      .fromTo(buttonsRef.current,
-        { y: 20, opacity: 0 },
+      .to(buttonsRef.current,
         { y: 0, opacity: 1, duration: 0.8 },
         "-=0.8"
       );
@@ -122,22 +125,22 @@ export function Hero() {
     <section ref={containerRef} className="relative pt-40 pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh]">
       <div className="container mx-auto px-6 relative z-10 text-center">
         <div className="absolute inset-0 -z-10 pointer-events-none overflow-visible">
-          <FloatingElement className="absolute top-[0%] left-[2%] md:top-[10%] md:left-[10%] text-accent/10 md:text-accent/20 scale-50 md:scale-100" delay={0.2} duration={5} yOffset={30} rotateOffset={10}>
+          <FloatingElement className="absolute top-[0%] left-[2%] md:top-[10%] md:left-[10%] text-accent/10 md:text-accent/20 scale-[0.35] md:scale-100" delay={0.2} duration={5} yOffset={30} rotateOffset={10}>
             <Bone size={64} className="rotate-45" />
           </FloatingElement>
-          <FloatingElement className="absolute top-[3%] right-[2%] md:top-[15%] md:right-[10%] text-accent/10 md:text-accent/15 scale-50 md:scale-100" delay={0.5} duration={6} yOffset={25} rotateOffset={-8}>
+          <FloatingElement className="absolute top-[3%] right-[2%] md:top-[15%] md:right-[10%] text-accent/10 md:text-accent/15 scale-[0.35] md:scale-100" delay={0.5} duration={6} yOffset={25} rotateOffset={-8}>
             <PawPrint size={48} className="-rotate-12" />
           </FloatingElement>
-          <FloatingElement className="absolute bottom-[20%] left-[2%] md:bottom-[25%] md:left-[10%] text-accent/10 md:text-accent/10 scale-50 md:scale-100" delay={0.8} duration={4.5} yOffset={20} rotateOffset={5}>
+          <FloatingElement className="absolute bottom-[20%] left-[2%] md:bottom-[25%] md:left-[10%] text-accent/10 md:text-accent/10 scale-[0.35] md:scale-100" delay={0.8} duration={4.5} yOffset={20} rotateOffset={5}>
             <Heart size={40} />
           </FloatingElement>
-          <FloatingElement className="absolute bottom-[2%] right-[2%] md:bottom-[10%] md:right-[10%] text-accent/10 md:text-accent/20 scale-50 md:scale-100" delay={0.3} duration={5.5} yOffset={35} rotateOffset={12}>
+          <FloatingElement className="absolute bottom-[2%] right-[2%] md:bottom-[10%] md:right-[10%] text-accent/10 md:text-accent/20 scale-[0.35] md:scale-100" delay={0.3} duration={5.5} yOffset={35} rotateOffset={12}>
             <Star size={56} className="rotate-12" />
           </FloatingElement>
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div ref={logoRef} className="mb-10 flex justify-center opacity-0">
+          <div ref={logoRef} className="mb-10 flex justify-center">
             <Image 
               src="/images/Logo.svg" 
               alt="Lunalead Studio" 
@@ -148,16 +151,16 @@ export function Hero() {
             />
           </div>
           
-          <h1 ref={titleRef} className="text-5xl md:text-7xl font-bold tracking-wide mb-8 leading-[0.9] clash-display text-foreground opacity-0">
+          <h1 ref={titleRef} className="text-5xl md:text-7xl font-bold tracking-wide mb-8 leading-[0.9] clash-display text-foreground">
             Digital Direction <br />
             for <span className="text-accent">Elite Pet Brands</span>.
           </h1>
           
-          <p ref={descriptionRef} className="text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed opacity-0">
+          <p ref={descriptionRef} className="text-xl md:text-2xl max-w-2xl mx-auto leading-relaxed">
             We fuse high-performance Next.js engineering with bespoke brand design to help pet-tech founders scale their vision into industry-leading digital experiences.
           </p>
           
-          <div ref={buttonsRef} className="mt-14 flex flex-wrap gap-6 justify-center opacity-0">
+          <div ref={buttonsRef} className="mt-14 flex flex-wrap gap-6 justify-center">
             <Magnetic>
               <button className="px-10 py-5 bg-foreground text-background font-bold rounded-full hover:shadow-2xl transition-all shadow-xl">
                 Explore Our Work
