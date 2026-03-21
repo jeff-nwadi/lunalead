@@ -46,7 +46,8 @@ export default function WorkContent() {
         );
 
         const img = item.querySelector(".floating-asset");
-        if (img) {
+        const isDesktop = window.innerWidth >= 1024;
+        if (img && isDesktop) {
           gsap.to(img, {
             y: -20,
             duration: 2,
@@ -122,16 +123,16 @@ export default function WorkContent() {
                     <div className="absolute inset-0 bg-forest-dark/20 mix-blend-multiply opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
                   </div>
                   <div className="floating-asset absolute inset-0 -top-10 -right-10 md:-top-20 md:-right-20 z-20 pointer-events-none drop-shadow-2xl">
-                    <div className="relative w-[110%] h-[110%] rounded-3xl overflow-hidden border-4 border-champagne shadow-2xl skew-x-1 skew-y-1">
+                    <div className="relative w-[95%] h-[90%] rounded-3xl overflow-hidden border-4 border-champagne shadow-2xl skew-x-1 skew-y-1">
                       <Image 
                         src={urlFor(project.mainImage).url()} 
                         alt={project.title} 
-                        width={1200}
+                        width={12000}
                         height={900}
                         className="w-full h-full object-cover" 
                         priority={idx === 0}
                       />
-                      <div className="absolute inset-0 bg-linear-to-tr from-forest-dark/60 via-forest-dark/10 to-transparent" />
+                      <div className="absolute inset-0 bg-black/40" />
                     </div>
                   </div>
                 </div>
