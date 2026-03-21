@@ -125,16 +125,16 @@ export function Hero() {
     <section ref={containerRef} className="relative pt-40 pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh]">
       <div className="container mx-auto px-6 relative z-10 text-center">
         <div className="absolute inset-0 -z-10 pointer-events-none overflow-visible">
-          <FloatingElement className="absolute top-[0%] left-[2%] md:top-[10%] md:left-[10%] text-accent/10 md:text-accent/20 scale-[0.35] md:scale-100" delay={0.2} duration={5} yOffset={30} rotateOffset={10}>
+          <FloatingElement className="absolute top-[0%] left-[2%] md:top-[10%] md:left-[10%] text-accent/10 md:text-accent/20 scale-[0.45] md:scale-100" delay={0.2} duration={5} yOffset={30} rotateOffset={10}>
             <Bone size={64} className="rotate-45" />
           </FloatingElement>
-          <FloatingElement className="absolute top-[3%] right-[2%] md:top-[15%] md:right-[10%] text-accent/10 md:text-accent/15 scale-[0.35] md:scale-100" delay={0.5} duration={6} yOffset={25} rotateOffset={-8}>
+          <FloatingElement className="absolute top-[3%] right-[2%] md:top-[15%] md:right-[10%] text-accent/10 md:text-accent/15 scale-[0.45] md:scale-100" delay={0.5} duration={6} yOffset={25} rotateOffset={-8}>
             <PawPrint size={48} className="-rotate-12" />
           </FloatingElement>
-          <FloatingElement className="absolute bottom-[20%] left-[2%] md:bottom-[25%] md:left-[10%] text-accent/10 md:text-accent/10 scale-[0.35] md:scale-100" delay={0.8} duration={4.5} yOffset={20} rotateOffset={5}>
+          <FloatingElement className="absolute bottom-[20%] left-[2%] md:bottom-[25%] md:left-[10%] text-accent/10 md:text-accent/10 scale-[0.45] md:scale-100" delay={0.8} duration={4.5} yOffset={20} rotateOffset={5}>
             <Heart size={40} />
           </FloatingElement>
-          <FloatingElement className="absolute bottom-[2%] right-[2%] md:bottom-[10%] md:right-[10%] text-accent/10 md:text-accent/20 scale-[0.35] md:scale-100" delay={0.3} duration={5.5} yOffset={35} rotateOffset={12}>
+          <FloatingElement className="absolute bottom-[2%] right-[2%] md:bottom-[10%] md:right-[10%] text-accent/10 md:text-accent/20 scale-[0.45] md:scale-100" delay={0.3} duration={5.5} yOffset={35} rotateOffset={12}>
             <Star size={56} className="rotate-12" />
           </FloatingElement>
         </div>

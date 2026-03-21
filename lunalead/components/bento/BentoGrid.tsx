@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
@@ -133,10 +133,15 @@ export function BentoGrid() {
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(headerRef.current?.children || [], 
-        { opacity: 0, y: 20 },
+      // Set initial state via CSS-in-JS for progressive enhancement
+      const headerElements = headerRef.current?.children || [];
+      const gridItems = gridRef.current?.children || [];
+
+      gsap.set([...headerElements, ...gridItems], { opacity: 0, y: 30 });
+
+      gsap.to(headerElements, 
         { 
           opacity: 1, 
           y: 0, 
@@ -150,8 +155,7 @@ export function BentoGrid() {
       );
 
       if (gridRef.current) {
-        gsap.fromTo(gridRef.current.children,
-          { opacity: 0, y: 40 },
+        gsap.to(gridItems,
           { 
             opacity: 1, 
             y: 0, 
@@ -174,10 +178,10 @@ export function BentoGrid() {
     <section ref={sectionRef} className="py-32 bg-background relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <div ref={headerRef} className="text-center max-w-2xl mx-auto mb-20">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 clash-display opacity-0">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 clash-display">
             Bespoke Pet Solutions
           </h2>
-          <p className="text-lg opacity-0">
+          <p className="text-lg">
             Full range of digital architectures to effectively enhance <br className="hidden md:block" /> your pet brand&apos;s global presence.
           </p>
         </div>
@@ -187,7 +191,7 @@ export function BentoGrid() {
             <div
               key={tile.id}
               className={cn(
-                "relative transition-all duration-500 opacity-0",
+                "relative transition-all duration-500",
                 tile.className
               )}
             >

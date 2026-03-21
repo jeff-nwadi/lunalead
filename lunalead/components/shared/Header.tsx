@@ -35,10 +35,9 @@ export function Header() {
     setLocalMounted(true);
   }, []);
 
-  if (!isMounted && !localMounted) return null;
-
+  // Removed the rigid mount check to ensure visibility even if JS initialization is delayed
   return (
-    <header className="fixed top-0 left-0 w-full z-40 bg-background/80 backdrop-blur-md border-b border-forest/10 dark:border-champagne/10">
+    <header className="fixed top-0 left-0 w-full z-[100] bg-background/80 backdrop-blur-md border-b border-forest/10 dark:border-champagne/10">
       <nav className="container mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image 
