@@ -5,6 +5,7 @@ import "./globals.css";
 import Providers from "./providers";
 import { Header } from "@/components/shared/Header";
 import { Footer } from "@/components/shared/Footer";
+import CustomCursor from "@/components/shared/CustomCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     title: "Lunalead Studio",
     description: "Digital Direction for Elite Pet Brands",
     type: "website",
-    locale: "en_NG",
+    locale: "en_US",
   },
 };
 
@@ -57,6 +58,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col focus-visible:outline-none bg-background text-foreground">
         <Providers>
+          <CustomCursor />
           <div className="grain-effect" />
           <Header />
           <main className="grow">{children}</main>

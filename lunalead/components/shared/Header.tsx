@@ -34,7 +34,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 w-full z-[100] bg-background/80 backdrop-blur-md border-b border-forest/10 dark:border-champagne/10">
+    <header className="fixed top-0 left-0 w-full z-100 bg-background/80 backdrop-blur-md border-b border-forest/10 dark:border-champagne/10">
       <nav className="container mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image 
@@ -68,10 +68,10 @@ export function Header() {
         </div>
 
         <div className="md:hidden flex items-center space-x-4">
-          <button 
-            onClick={toggleMenu} 
-            className="p-3 -mr-3 min-w-[44px] min-h-[44px] flex items-center justify-center"
-            aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
+            <button 
+              onClick={() => setMenuOpen(!isMenuOpen)}
+              className="relative z-100 p-4 -mr-4 flex flex-col items-center justify-center gap-1.5 focus:outline-none min-w-[44px] min-h-[44px]"
+              aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
           >
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -81,7 +81,7 @@ export function Header() {
       {isMenuOpen && (
         <div
           ref={menuRef}
-          className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-forest/10 dark:border-champagne/10 p-6 flex flex-col space-y-4 shadow-xl z-[110]"
+          className="md:hidden absolute top-20 left-0 w-full bg-background border-b border-forest/10 dark:border-champagne/10 p-6 flex flex-col space-y-4 shadow-xl z-110"
         >
           {navLinks.map((link) => (
             <Link

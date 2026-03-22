@@ -202,7 +202,7 @@ export default function WorkContent() {
                    className="object-cover"
                  />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
               <div className="relative z-10">
                 <span className="px-3 py-1 bg-accent rounded-full text-[10px] font-black uppercase tracking-widest text-champagne mb-4 inline-block">Prototyping</span>
                 <h4 className="text-3xl font-black text-champagne mb-4 clash-display">Smart Collar Dashboard</h4>

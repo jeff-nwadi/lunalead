@@ -9,13 +9,15 @@ interface BentoImageCarouselProps {
   interval?: number;
   className?: string;
   alt: string;
+  priority?: boolean;
 }
 
 const BentoImageCarousel: React.FC<BentoImageCarouselProps> = ({ 
   images, 
   interval = 4000, 
   className,
-  alt 
+  alt,
+  priority = false
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -43,6 +45,7 @@ const BentoImageCarousel: React.FC<BentoImageCarouselProps> = ({
             src={src}
             alt={`${alt} ${index + 1}`}
             fill
+            priority={priority && index === 0}
             className="object-cover transition-transform duration-4000 ease-linear"
             style={{
               transform: index === currentIndex ? "scale(1.1)" : "scale(1.0)"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
@@ -17,6 +17,36 @@ import {
 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const Counter = ({ value }: { value: number }) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        let start = 0;
+        const duration = 2000;
+        const increment = value / (duration / 16);
+        const timer = setInterval(() => {
+          start += increment;
+          if (start >= value) {
+            setCount(value);
+            clearInterval(timer);
+          } else {
+            setCount(Math.floor(start));
+          }
+        }, 16);
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 });
+
+    if (countRef.current) observer.observe(countRef.current);
+    return () => observer.disconnect();
+  }, [value]);
+
+  return <span ref={countRef}>{count}</span>;
+};
 
 const tiles = [
   {
@@ -53,20 +83,21 @@ const tiles = [
           ]}
           alt="Elite Cat"
           className="rounded-4xl h-full"
+          priority={true}
         />
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500 z-10" />
         <div className="absolute top-8 right-8 flex gap-2 z-20">
           {[1,2,3,4].map((i) => (
             <div key={i} className="w-10 h-10 rounded-full bg-green-500/20 backdrop-blur-md border border-green-500/30 flex items-center justify-center">
               <div className="w-8 h-8 rounded-full border-2 border-green-500 flex items-center justify-center">
-                <span className="text-[8px] font-black text-white">100</span>
+                <span className="text-[8px] font-black text-white"><Counter value={100} /></span>
               </div>
             </div>
           ))}
         </div>
-        <div className="absolute bottom-0 left-0 p-8 z-20">
+        <div className="absolute bottom-0 left-0 p-8 z-20 text-balance">
           <h3 className="text-xl font-bold text-white leading-tight">
-            Small changes and big impact <br /> on the way!
+            Micro-Optimized <br /> for Macro-Impact.
           </h3>
         </div>
       </div>
