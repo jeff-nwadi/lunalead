@@ -22,7 +22,7 @@ export function Footer() {
               />
             </div>
             <p className="text-champagne/60 max-w-sm mb-8">
-              Digital Direction for Elite Pet Brands. Handcrafted in Nigeria for the Global Pet Industry.
+              Digital Direction for Elite Pet Brands. Handcrafted Excellence for the Global Pet Industry.
             </p>
             <div className="flex space-x-4">
               <Link href="https://linkedin.com" className="p-3 bg-champagne/10 rounded-xl hover:bg-champagne/20 transition-colors">

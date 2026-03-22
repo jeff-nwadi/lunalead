@@ -5,10 +5,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { cn } from "../../lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { getProjects, SanityProject } from "@/services/sanity";
 import { urlFor } from "@/lib/sanity";
+import PetsTracker from "@/public/images/pet tracker dashboard.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -192,14 +194,15 @@ export default function WorkContent() {
 
           <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
             <div className="md:col-span-4 aspect-video bg-white/5 rounded-[2.5rem] p-12 flex flex-col justify-end group overflow-hidden relative border border-white/10">
-              <div className="absolute inset-0 opacity-40 group-hover:scale-110 transition-transform duration-700">
+              <div className="absolute inset-0 group-hover:scale-110 transition-transform duration-700">
                  <Image 
-                   src="https://images.unsplash.com/photo-1548191265-cc70d3d45ba1?auto=format&fit=crop&q=80&w=1200" 
+                   src={PetsTracker} 
                    alt="Smart Collar" 
                    fill
                    className="object-cover"
                  />
               </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
               <div className="relative z-10">
                 <span className="px-3 py-1 bg-accent rounded-full text-[10px] font-black uppercase tracking-widest text-champagne mb-4 inline-block">Prototyping</span>
                 <h4 className="text-3xl font-black text-champagne mb-4 clash-display">Smart Collar Dashboard</h4>
@@ -217,7 +220,10 @@ export default function WorkContent() {
               <h4 className="text-xl font-bold text-white/40 clash-display">Pet-Biometric <br />Security Keys</h4>
             </div>
 
-            <div className="md:col-span-4 aspect-21/9 bg-white/5 border border-white/10 rounded-[2.5rem] p-12 flex items-center justify-between group cursor-pointer hover:border-accent transition-colors">
+            <Link 
+              href="/contact"
+              className="md:col-span-4 aspect-21/9 bg-white/5 border border-white/10 rounded-[2.5rem] p-12 flex items-center justify-between group cursor-pointer hover:border-accent transition-colors"
+            >
               <div>
                 <h4 className="text-3xl font-black text-foreground clash-display">Join the Alpha</h4>
                 <p className="text-foreground/60">Partner with our studio to build the next industry leader.</p>
@@ -225,7 +231,7 @@ export default function WorkContent() {
               <div className="h-16 w-16 rounded-full bg-accent flex items-center justify-center text-champagne group-hover:scale-110 transition-all">
                 <ArrowUpRight size={32} />
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

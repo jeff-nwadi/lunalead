@@ -15,7 +15,7 @@ export const siteConfig = {
   ],
   contact: {
     email: "hello@lunalead.com",
-    address: "Handcrafted in Nigeria for the Global Pet Industry.",
+    address: "Handcrafted Excellence for the Global Pet Industry.",
     bookingUrl: "/contact",
   },
 };

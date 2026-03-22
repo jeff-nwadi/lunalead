@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
+import Link from "next/link";
 import { Bone, PawPrint, Heart, Star, Sparkles } from "lucide-react";
 import Magnetic from "../shared/Magnetic";
 
@@ -162,13 +163,15 @@ export function Hero() {
           
           <div ref={buttonsRef} className="mt-14 flex flex-wrap gap-6 justify-center">
             <Magnetic>
-              <button className="px-10 py-5 bg-foreground text-background font-bold rounded-full hover:shadow-2xl transition-all shadow-xl">
+              <Link href="/work" className="px-10 py-5 bg-foreground text-background font-bold rounded-full hover:shadow-2xl transition-all shadow-xl">
                 Explore Our Work
-              </button>
+              </Link>
             </Magnetic>
-            <button className="px-10 py-5 border border-foreground/30 rounded-full font-bold hover:bg-foreground/5 transition-all">
-              Our Methodology
-            </button>
+            <Magnetic>
+              <Link href="/services" className="px-10 py-5 border border-foreground/30 rounded-full font-bold hover:bg-foreground/5 transition-all">
+                Our Methodology
+              </Link>
+            </Magnetic>
           </div>
         </div>
       </div>

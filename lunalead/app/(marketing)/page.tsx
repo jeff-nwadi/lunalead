@@ -16,7 +16,7 @@ export default function HomePage() {
             </h2>
             <p className="text-lg opacity-70 mb-10 leading-relaxed">
               We don&apos;t do cookie-cutter. Every Lunalead project is a handcrafted artifact, 
-              blending Nigerian creative soul with global engineering standards.
+              blending world-class creative soul with global engineering standards.
             </p>
           </div>
         </div>

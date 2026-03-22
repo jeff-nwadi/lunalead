@@ -64,8 +64,8 @@ export default function AboutPage() {
             </p>
             <p>
               As a former digital artist turned agency founder, I saw the gap between 
-              world-class pet products and their sub-par online experiences. We moved 
-              from Nigeria to the global stage to fix that.
+              world-class pet products and their sub-par online experiences. We launched 
+              onto the global stage to fix that.
             </p>
             <p className="font-bold text-foreground">
               We believe pet brands deserve the same technical excellence as Silicon Valley SaaS.
@@ -104,7 +104,7 @@ export default function AboutPage() {
           <div className="opacity-0">
             <h3 className="text-2xl font-bold mb-6 italic text-accent">Global Reach</h3>
             <p className="opacity-70 leading-relaxed">
-              Based in Nigeria, building for the world. We combine local creative flair with international engineering standards.
+              Born from a global vision, building for the world. We combine elite creative flair with international engineering standards.
             </p>
           </div>
         </div>

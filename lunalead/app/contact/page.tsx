@@ -113,8 +113,8 @@ export default function ContactPage() {
             <div className="w-24 h-24 bg-champagne/20 rounded-full flex items-center justify-center mx-auto mb-8">
               <CheckCircle2 size={48} />
             </div>
-            <h2 className="text-5xl md:text-7xl font-black mb-6 uppercase italic">Success!</h2>
-            <p className="text-2xl mb-12 opacity-80 max-w-lg mx-auto leading-relaxed">
+            <h2 className="text-4xl md:text-5xl font-black mb-6 uppercase italic">Success!</h2>
+            <p className="text-lg md:text-xl mb-12 opacity-80 max-w-lg mx-auto leading-relaxed px-6">
               Your transmission has been received. Our team will be fetching some answers and getting back to you within 24 hours.
             </p>
             <button 

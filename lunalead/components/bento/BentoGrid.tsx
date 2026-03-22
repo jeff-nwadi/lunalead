@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { cn } from "../../lib/utils";
+import BentoImageCarousel from "./BentoImageCarousel";
 import { 
   Stethoscope, 
   Dog, 
@@ -44,15 +45,17 @@ const tiles = [
     title: "Impact",
     content: (
       <div className="h-full relative overflow-hidden rounded-4xl group">
-        <Image 
-          src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&q=80&w=800" 
-          alt="Impact" 
-          width={800}
-          height={600}
-          className="w-full h-full object-cover rounded-4xl group-hover:scale-110 transition-transform duration-700" 
+        <BentoImageCarousel 
+          images={[
+            "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&q=80&w=800"
+          ]}
+          alt="Elite Cat"
+          className="rounded-4xl h-full"
         />
-        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
-        <div className="absolute top-8 right-8 flex gap-2 z-10">
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500 z-10" />
+        <div className="absolute top-8 right-8 flex gap-2 z-20">
           {[1,2,3,4].map((i) => (
             <div key={i} className="w-10 h-10 rounded-full bg-green-500/20 backdrop-blur-md border border-green-500/30 flex items-center justify-center">
               <div className="w-8 h-8 rounded-full border-2 border-green-500 flex items-center justify-center">
@@ -61,7 +64,7 @@ const tiles = [
             </div>
           ))}
         </div>
-        <div className="absolute bottom-0 left-0 p-8 z-10">
+        <div className="absolute bottom-0 left-0 p-8 z-20">
           <h3 className="text-xl font-bold text-white leading-tight">
             Small changes and big impact <br /> on the way!
           </h3>
@@ -75,14 +78,17 @@ const tiles = [
     title: "Brand DNA",
     content: (
       <div className="h-full relative overflow-hidden rounded-4xl group">
-        <Image 
-          src="https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&q=80&w=800" 
-          alt="Brand DNA" 
-          width={800}
-          height={1200}
-          className="w-full h-full object-cover rounded-4xl group-hover:scale-105 transition-transform duration-1000" 
+        <BentoImageCarousel 
+          images={[
+            "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=800"
+          ]}
+          alt="Elite Dog"
+          className="rounded-4xl h-full"
+          interval={5000}
         />
-        <div className="absolute top-8 left-8">
+        <div className="absolute top-8 left-8 z-20">
           <span className="px-6 py-3 bg-white/90 backdrop-blur-md text-black font-black italic rounded-xl text-xl uppercase tracking-tighter shadow-xl">
             Brand DNA.
           </span>

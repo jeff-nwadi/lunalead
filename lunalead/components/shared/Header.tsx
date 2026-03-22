@@ -2,10 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import Image from "next/image";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useStore } from "@/store/useStore";
 import Magnetic from "./Magnetic";
 
@@ -17,7 +16,6 @@ const navLinks = [
 ];
 
 export function Header() {
-  const { theme, setTheme } = useTheme();
   const { isMounted, isMenuOpen, toggleMenu, setMenuOpen } = useStore();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +33,6 @@ export function Header() {
     setLocalMounted(true);
   }, []);
 
-  // Removed the rigid mount check to ensure visibility even if JS initialization is delayed
   return (
     <header className="fixed top-0 left-0 w-full z-[100] bg-background/80 backdrop-blur-md border-b border-forest/10 dark:border-champagne/10">
       <nav className="container mx-auto px-6 h-20 flex items-center justify-between">
@@ -60,13 +57,6 @@ export function Header() {
               {link.name}
             </Link>
           ))}
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-2 rounded-full hover:bg-foreground/5 transition-colors"
-            aria-label="Toggle Theme"
-          >
-            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
           <Magnetic>
             <Link
               href="/contact"
@@ -78,13 +68,6 @@ export function Header() {
         </div>
 
         <div className="md:hidden flex items-center space-x-4">
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-3 rounded-full hover:bg-foreground/5 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-            aria-label="Toggle Theme"
-          >
-            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
           <button 
             onClick={toggleMenu} 
             className="p-3 -mr-3 min-w-[44px] min-h-[44px] flex items-center justify-center"
