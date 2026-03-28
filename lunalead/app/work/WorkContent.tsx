@@ -28,19 +28,19 @@ export default function WorkContent() {
     const ctx = gsap.context(() => {
       // Header Animation
       gsap.fromTo(headerRef.current,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1.5, ease: "expo.out" }
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1.2, ease: "expo.out" }
       );
 
       // Projects Animation
       const cards = gsap.utils.toArray(".project-card");
       cards.forEach((card: any, i) => {
         gsap.fromTo(card,
-          { opacity: 0, y: 100 },
+          { opacity: 0, y: 40 },
           {
             opacity: 1,
             y: 0,
-            duration: 1.2,
+            duration: 1,
             ease: "power3.out",
             scrollTrigger: {
               trigger: card,
@@ -56,7 +56,7 @@ export default function WorkContent() {
       const images = gsap.utils.toArray(".parallax-img");
       images.forEach((img: any) => {
         gsap.to(img, {
-          yPercent: 10,
+          yPercent: 5,
           ease: "none",
           scrollTrigger: {
             trigger: img,
@@ -74,13 +74,13 @@ export default function WorkContent() {
   return (
     <section ref={containerRef} className="bg-background text-foreground pt-32 pb-60 transition-colors duration-500 min-h-screen selection:bg-accent selection:text-white">
       <div className="container mx-auto px-6">
-        <header ref={headerRef} className="mb-32 text-center md:text-left max-w-5xl">
-          <span className="text-accent font-bold uppercase tracking-[0.4em] text-xs mb-6 block font-clash">Portfolio</span>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] clash-display tracking-tight mb-12">
+        <header ref={headerRef} className="mb-20 md:mb-32 text-center md:text-left max-w-5xl">
+          <span className="text-accent font-bold uppercase tracking-[0.4em] text-[10px] md:text-xs mb-4 md:mb-6 block font-clash">Portfolio</span>
+          <h1 className="text-4xl md:text-7xl lg:text-8xl font-black leading-[0.9] clash-display tracking-wide mb-8 md:mb-12">
             SELECTED <br />
             <span className="text-accent">WORKS.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-foreground/80 max-w-3xl font-medium leading-relaxed">
+          <p className="text-lg md:text-2xl text-foreground/80 max-w-3xl font-medium leading-relaxed">
             Where precision engineering meets bespoke brand design. 
             We build digital flagships that scale with your vision.
           </p>
@@ -161,18 +161,18 @@ export default function WorkContent() {
         )}
 
         {/* Dynamic CTA */}
-        <div className="mt-80 relative overflow-hidden rounded-[4rem] bg-accent text-foreground p-20 md:p-32 text-center group">
+        <div className="mt-40 md:mt-80 relative overflow-hidden rounded-[3rem] md:rounded-[4rem] bg-accent text-foreground p-10 md:p-32 text-center group">
           <div className="absolute inset-0 bg-white/5 scale-0 group-hover:scale-150 transition-transform duration-1000 rounded-full" />
           <div className="relative z-10">
-            <span className="text-foreground/60 font-bold uppercase tracking-[0.4em] text-xs mb-8 block font-mono italic">Curating Excellence</span>
-            <h2 className="text-5xl md:text-8xl font-black mb-16 clash-display leading-none tracking-wide">
-              READY TO BUILD <br /> YOUR FLAGSHIP?
+            <span className="text-foreground/60 font-bold uppercase tracking-[0.4em] text-[10px] md:text-xs mb-6 md:mb-8 block font-mono italic">Curating Excellence</span>
+            <h2 className="text-3xl md:text-8xl font-black mb-10 md:mb-16 clash-display leading-tight md:leading-none tracking-wide md:tracking-tighter">
+              READY TO BUILD <br className="hidden md:block" /> YOUR FLAGSHIP?
             </h2>
             <Link 
               href="/contact"
-              className="inline-flex items-center gap-6 bg-foreground text-background px-16 py-8 rounded-full font-black text-2xl hover:scale-105 transition-all shadow-2xl active:scale-95"
+              className="flex items-center gap-4 md:gap-6 bg-foreground text-background px-6 py-4 md:px-16 md:py-8 rounded-full font-black text-lg md:text-2xl hover:scale-105 transition-all shadow-2xl active:scale-95"
             >
-              Start Collaboration <ArrowUpRight size={32} />
+              Start Collaboration <ArrowUpRight className="w-5 h-5 md:w-8 md:h-8" />
             </Link>
           </div>
         </div>

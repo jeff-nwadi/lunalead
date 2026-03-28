@@ -101,18 +101,18 @@ export function Hero() {
       );
 
       gsap.to(blur1Ref.current, {
-        scale: 1.2,
-        opacity: 0.1,
-        duration: 10,
+        scale: 1.1,
+        opacity: 0.08,
+        duration: 20,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut"
       });
 
       gsap.to(blur2Ref.current, {
-        scale: 1.3,
-        opacity: 0.15,
-        duration: 15,
+        scale: 1.15,
+        opacity: 0.12,
+        duration: 30,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut"
@@ -126,8 +126,8 @@ export function Hero() {
     <section ref={containerRef} className="relative pt-40 pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh]">
       <div className="container mx-auto px-6 relative z-10 text-center">
         <div className="absolute inset-0 -z-10 pointer-events-none overflow-visible">
-          {/* Golden Retriever Card */}
-          <FloatingElement className="absolute top-[0%] left-[2%] md:top-[12%] md:left-[8%] scale-[0.6] md:scale-100" delay={0.2} duration={5} yOffset={30} rotateOffset={12}>
+           {/* Golden Retriever Card */}
+          <FloatingElement className="absolute top-[0%] left-[2%] md:top-[12%] md:left-[8%] scale-[0.6] md:scale-100" delay={0.2} duration={8} yOffset={15} rotateOffset={5}>
             <div className="relative w-32 h-40 md:w-44 md:h-56 bg-white p-2 md:p-3 rounded-2xl shadow-2xl border-2 border-white/20 transform -rotate-6 overflow-hidden">
                <Image 
                 src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=600"
@@ -139,7 +139,7 @@ export function Hero() {
           </FloatingElement>
 
           {/* Persian Cat Card */}
-          <FloatingElement className="absolute top-[3%] right-[2%] md:top-[18%] md:right-[5%] scale-[0.6] md:scale-100" delay={0.5} duration={6} yOffset={25} rotateOffset={-10}>
+          <FloatingElement className="absolute top-[3%] right-[2%] md:top-[18%] md:right-[5%] scale-[0.6] md:scale-100" delay={0.5} duration={10} yOffset={12} rotateOffset={-4}>
              <div className="relative w-28 h-36 md:w-40 md:h-52 bg-white p-2 md:p-3 rounded-2xl shadow-2xl border-2 border-white/20 transform rotate-8 overflow-hidden">
                <Image 
                 src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=600"
@@ -151,7 +151,7 @@ export function Hero() {
           </FloatingElement>
 
           {/* Rabbit Card */}
-          <FloatingElement className="absolute bottom-[20%] left-[2%] md:bottom-[20%] md:left-[5%] scale-[0.6] md:scale-100" delay={0.8} duration={4.5} yOffset={20} rotateOffset={6}>
+          <FloatingElement className="absolute bottom-[20%] left-[2%] md:bottom-[20%] md:left-[5%] scale-[0.6] md:scale-100" delay={0.8} duration={7} yOffset={10} rotateOffset={3}>
             <div className="relative w-32 h-40 md:w-36 md:h-48 bg-white p-2 md:p-3 rounded-2xl shadow-2xl border-2 border-white/20 transform rotate-3 overflow-hidden">
                <Image 
                 src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&q=80&w=600"
@@ -163,7 +163,7 @@ export function Hero() {
           </FloatingElement>
 
           {/* Bird Card */}
-          <FloatingElement className="absolute bottom-[2%] right-[2%] md:bottom-[10%] md:right-[8%] scale-[0.6] md:scale-100" delay={0.3} duration={5.5} yOffset={35} rotateOffset={15}>
+          <FloatingElement className="absolute bottom-[2%] right-[2%] md:bottom-[10%] md:right-[8%] scale-[0.6] md:scale-100" delay={0.3} duration={9} yOffset={18} rotateOffset={6}>
             <div className="relative w-32 h-44 md:w-48 md:h-64 bg-white p-2 md:p-3 rounded-2xl shadow-2xl border-2 border-white/20 transform -rotate-3 overflow-hidden">
                <Image 
                 src="https://images.unsplash.com/photo-1551085254-e96b210db58a?auto=format&fit=crop&q=80&w=800"
