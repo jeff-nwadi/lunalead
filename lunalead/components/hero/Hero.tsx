@@ -126,17 +126,52 @@ export function Hero() {
     <section ref={containerRef} className="relative pt-40 pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh]">
       <div className="container mx-auto px-6 relative z-10 text-center">
         <div className="absolute inset-0 -z-10 pointer-events-none overflow-visible">
-          <FloatingElement className="absolute top-[0%] left-[2%] md:top-[10%] md:left-[10%] text-accent/10 md:text-accent/20 scale-[0.45] md:scale-100" delay={0.2} duration={5} yOffset={30} rotateOffset={10}>
-            <Bone size={64} className="rotate-45" />
+          {/* Golden Retriever Card */}
+          <FloatingElement className="absolute top-[0%] left-[2%] md:top-[12%] md:left-[8%] scale-[0.6] md:scale-100" delay={0.2} duration={5} yOffset={30} rotateOffset={12}>
+            <div className="relative w-32 h-40 md:w-44 md:h-56 bg-white p-2 md:p-3 rounded-2xl shadow-2xl border-2 border-white/20 transform -rotate-6 overflow-hidden">
+               <Image 
+                src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=600"
+                alt="Happy Dog"
+                fill
+                className="object-cover rounded-xl"
+              />
+            </div>
           </FloatingElement>
-          <FloatingElement className="absolute top-[3%] right-[2%] md:top-[15%] md:right-[10%] text-accent/10 md:text-accent/15 scale-[0.45] md:scale-100" delay={0.5} duration={6} yOffset={25} rotateOffset={-8}>
-            <PawPrint size={48} className="-rotate-12" />
+
+          {/* Persian Cat Card */}
+          <FloatingElement className="absolute top-[3%] right-[2%] md:top-[18%] md:right-[5%] scale-[0.6] md:scale-100" delay={0.5} duration={6} yOffset={25} rotateOffset={-10}>
+             <div className="relative w-28 h-36 md:w-40 md:h-52 bg-white p-2 md:p-3 rounded-2xl shadow-2xl border-2 border-white/20 transform rotate-8 overflow-hidden">
+               <Image 
+                src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=600"
+                alt="Majestic Cat"
+                fill
+                className="object-cover rounded-xl"
+              />
+            </div>
           </FloatingElement>
-          <FloatingElement className="absolute bottom-[20%] left-[2%] md:bottom-[25%] md:left-[10%] text-accent/10 md:text-accent/10 scale-[0.45] md:scale-100" delay={0.8} duration={4.5} yOffset={20} rotateOffset={5}>
-            <Heart size={40} />
+
+          {/* Rabbit Card */}
+          <FloatingElement className="absolute bottom-[20%] left-[2%] md:bottom-[20%] md:left-[5%] scale-[0.6] md:scale-100" delay={0.8} duration={4.5} yOffset={20} rotateOffset={6}>
+            <div className="relative w-32 h-40 md:w-36 md:h-48 bg-white p-2 md:p-3 rounded-2xl shadow-2xl border-2 border-white/20 transform rotate-3 overflow-hidden">
+               <Image 
+                src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&q=80&w=600"
+                alt="Cute Rabbit"
+                fill
+                className="object-cover rounded-xl"
+              />
+            </div>
           </FloatingElement>
-          <FloatingElement className="absolute bottom-[2%] right-[2%] md:bottom-[10%] md:right-[10%] text-accent/10 md:text-accent/20 scale-[0.45] md:scale-100" delay={0.3} duration={5.5} yOffset={35} rotateOffset={12}>
-            <Star size={56} className="rotate-12" />
+
+          {/* Bird Card */}
+          <FloatingElement className="absolute bottom-[2%] right-[2%] md:bottom-[10%] md:right-[8%] scale-[0.6] md:scale-100" delay={0.3} duration={5.5} yOffset={35} rotateOffset={15}>
+            <div className="relative w-32 h-44 md:w-48 md:h-64 bg-white p-2 md:p-3 rounded-2xl shadow-2xl border-2 border-white/20 transform -rotate-3 overflow-hidden">
+               <Image 
+                src="https://images.unsplash.com/photo-1551085254-e96b210db58a?auto=format&fit=crop&q=80&w=800"
+                alt="White Cockatoo"
+                fill
+                className="object-cover rounded-xl"
+              />
+            </div>
           </FloatingElement>
         </div>
 

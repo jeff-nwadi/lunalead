@@ -3,234 +3,176 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { cn } from "../../lib/utils";
+import { ArrowUpRight, Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { getProjects, SanityProject } from "@/services/sanity";
 import { urlFor } from "@/lib/sanity";
-import PetsTracker from "@/public/images/pet tracker dashboard.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function WorkContent() {
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
 
-  const { data: projects = [] } = useQuery({
+  const { data: projects = [], isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: getProjects,
   });
 
   useLayoutEffect(() => {
+    if (isLoading || projects.length === 0) return;
+
     const ctx = gsap.context(() => {
+      // Header Animation
       gsap.fromTo(headerRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1.2, ease: "expo.out" }
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1.5, ease: "expo.out" }
       );
 
-      const items = gsap.utils.toArray<HTMLDivElement>(".project-item");
-      items.forEach((item) => {
-        gsap.fromTo(item,
-          { opacity: 0, y: 50 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            duration: 1,
+      // Projects Animation
+      const cards = gsap.utils.toArray(".project-card");
+      cards.forEach((card: any, i) => {
+        gsap.fromTo(card,
+          { opacity: 0, y: 100 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: item,
-              start: "top 85%",
-            }
+              trigger: card,
+              start: "top 90%",
+              toggleActions: "play none none none"
+            },
+            delay: (i % 2) * 0.15
           }
         );
+      });
 
-        const img = item.querySelector(".floating-asset");
-        const isDesktop = window.innerWidth >= 1024;
-        if (img && isDesktop) {
-          gsap.to(img, {
-            y: -20,
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut"
-          });
-          
-          item.addEventListener("mousemove", (e: MouseEvent) => {
-            const rect = item.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            
-            gsap.to(img, {
-              rotateY: x * 15,
-              rotateX: -y * 15,
-              x: x * 30,
-              y: y * 30 - 20, 
-              duration: 0.5,
-              ease: "power2.out"
-            });
-          });
-          
-          item.addEventListener("mouseleave", () => {
-            gsap.to(img, {
-              rotateY: 0,
-              rotateX: 0,
-              x: 0,
-              y: -20,
-              duration: 1,
-              ease: "elastic.out(1, 0.3)"
-            });
-          });
-        }
+      // Subtle parallax for some images
+      const images = gsap.utils.toArray(".parallax-img");
+      images.forEach((img: any) => {
+        gsap.to(img, {
+          yPercent: 10,
+          ease: "none",
+          scrollTrigger: {
+            trigger: img,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          }
+        });
       });
     }, containerRef);
 
     return () => ctx.revert();
-  }, [projects]);
+  }, [projects, isLoading]);
 
   return (
-    <section ref={containerRef} className="bg-background pt-32 pb-40">
+    <section ref={containerRef} className="bg-background text-foreground pt-32 pb-60 transition-colors duration-500 min-h-screen selection:bg-accent selection:text-white">
       <div className="container mx-auto px-6">
-        <div
-          ref={headerRef}
-          className="max-w-4xl mb-32"
-        >
-          <span className="text-accent font-bold uppercase tracking-[0.5em] text-xs mb-6 block">Case Studies</span>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-10 leading-[0.8] clash-display text-foreground tracking-wide">
-            Selected <br />
-            <span className="text-accent">Works.</span>
+        <header ref={headerRef} className="mb-32 text-center md:text-left max-w-5xl">
+          <span className="text-accent font-bold uppercase tracking-[0.4em] text-xs mb-6 block font-clash">Portfolio</span>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] clash-display tracking-tight mb-12">
+            SELECTED <br />
+            <span className="text-accent italic">WORKS.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-foreground/60 max-w-2xl leading-relaxed">
+          <p className="text-xl md:text-2xl text-foreground/80 max-w-3xl font-medium leading-relaxed">
             Where precision engineering meets bespoke brand design. 
             We build digital flagships that scale with your vision.
           </p>
-        </div>
+        </header>
 
-        <div ref={projectsRef} className="space-y-60">
-          {projects.length === 0 ? (
-            <div className="py-20 text-center">
-               <p className="text-foreground/40 font-clash font-black text-2xl animate-pulse">New Case Studies Fetching...</p>
-            </div>
-          ) : (
-            projects.map((project: SanityProject, idx: number) => (
-              <div
-                key={project._id}
-                className="project-item grid grid-cols-1 lg:grid-cols-2 gap-20 items-center"
-              >
-
-                <div className="relative group">
-                  <div className="relative z-10 rounded-[2.5rem] overflow-hidden bg-white/5 aspect-4/3 border border-white/10">
-                    <div className="absolute inset-0 bg-forest-dark/20 mix-blend-multiply opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
-                  </div>
-                  <div className="floating-asset absolute inset-0 -top-10 -right-10 md:-top-20 md:-right-20 z-20 pointer-events-none drop-shadow-2xl">
-                    <div className="relative w-[95%] h-[90%] rounded-3xl overflow-hidden border-4 border-champagne shadow-2xl skew-x-1 skew-y-1">
-                      <Image 
-                        src={urlFor(project.mainImage).url()} 
-                        alt={project.title} 
-                        width={12000}
-                        height={900}
-                        className="w-full h-full object-cover" 
-                        priority={idx === 0}
-                      />
-                      <div className="absolute inset-0 bg-black/40" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="relative z-30">
-                  <div className="mb-6 flex items-center gap-4">
-                    <span className="h-px w-8 bg-accent" />
-                    <p className="text-accent font-black tracking-widest uppercase text-sm">{project.category}</p>
-                  </div>
-                  <h2 className="text-4xl md:text-6xl font-black mb-8 text-foreground leading-[0.9] clash-display">{project.title}</h2>
-                  
-                  <div className="grid gap-6 mb-12">
-                    <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-                      <p className="text-[10px] uppercase tracking-widest text-foreground/40 mb-2 font-bold">The Problem</p>
-                      <p className="text-foreground/80 font-medium leading-relaxed">{project.problem}</p>
-                    </div>
-                    <div className="p-6 rounded-2xl bg-accent text-white shadow-xl shadow-accent/20">
-                      <p className="text-[10px] uppercase tracking-widest text-white/40 mb-2 font-bold">The Solution</p>
-                      <p className="font-medium leading-relaxed">{project.solution}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-3 mb-12">
-                    {project.technologies?.map(s => (
-                      <span key={s} className="px-4 py-2 border border-white/10 rounded-full text-[10px] font-black uppercase tracking-wider text-foreground/60">{s}</span>
-                    ))}
-                  </div>
-                  
-                  {project.caseStudyLink && (
-                    <a 
-                      href={project.caseStudyLink} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="flex items-center gap-3 group text-xl font-black text-foreground hover:text-accent transition-colors w-fit"
-                    >
-                      View Full Case Study 
-                      <div className="p-3 rounded-full bg-foreground group-hover:bg-accent text-background transition-all group-hover:translate-x-1 group-hover:-translate-y-1">
-                        <ArrowUpRight size={20} />
-                      </div>
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-
-        <div className="mt-60 pt-40 border-t border-white/10">
-          <div className="max-w-4xl mb-24">
-            <span className="text-accent font-black uppercase tracking-[0.4em] text-xs mb-6 block italic underline underline-offset-8">Research & Development</span>
-            <h3 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-8 leading-[0.8] clash-display tracking-wide">
-              Defining the <br />
-              <span className="">Future of Pet-Tech.</span>
-            </h3>
-            <p className="text-xl text-foreground/60">Exploring the intersection of computer vision, bio-data, and luxury pet experiences.</p>
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-40 gap-4 opacity-50">
+            <Loader2 className="animate-spin text-accent" size={48} />
+            <p className="clash-display font-medium tracking-widest text-sm uppercase">Fetching Case Studies...</p>
           </div>
+        ) : projects.length === 0 ? (
+          <div className="py-40 text-center border border-white/10 rounded-[3rem] bg-white/5">
+             <p className="text-foreground/40 font-clash font-black text-2xl">No Case Studies Found.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-32 px-2 md:px-0">
+            {projects.map((project: SanityProject, idx: number) => {
+              // Assign layout properties based on index to create a dynamic masonry feel
+              const isHuge = idx % 3 === 2;
+              const aspect = idx % 4 === 0 ? "aspect-[4/5]" : (idx % 3 === 0 ? "aspect-[3/4]" : "aspect-[4/3]");
+              
+              return (
+                <div 
+                  key={project._id} 
+                  className={cn(
+                    "project-card relative group flex flex-col pt-0",
+                    isHuge ? "md:row-span-1" : "",
+                    idx % 2 === 1 ? "md:mt-40" : "" // Stagger effect
+                  )}
+                >
+                  <div className={cn(
+                    "relative overflow-hidden rounded-[3rem] md:rounded-[5rem] bg-white/5 transition-transform duration-700 group-hover:scale-[1.01] border border-white/10 shadow-2xl shadow-black/20",
+                    aspect
+                  )}>
+                    <div className="parallax-img absolute inset-0 -top-[20%] h-[140%] w-full">
+                      <Image 
+                        src={urlFor(project.mainImage).width(1200).url()}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                        priority={idx < 2}
+                      />
+                      <div className="absolute inset-0 bg-black/20 transition-opacity duration-700 group-hover:opacity-0" />
+                    </div>
+                    
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-background/60 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 md:p-16 text-foreground">
+                      <span className="text-xs font-bold uppercase tracking-widest mb-4 opacity-70">{project.category}</span>
+                      <h3 className="text-3xl md:text-6xl font-black clash-display mb-10 leading-none">{project.title}</h3>
+                      <Link 
+                        href={`/work/${project.slug?.current || project._id}`}
+                        className="flex items-center gap-4 group/btn font-black text-lg uppercase tracking-widest w-fit"
+                      >
+                        View Project 
+                        <div className="h-12 w-12 rounded-full bg-foreground text-background flex items-center justify-center group-hover/btn:rotate-45 transition-transform duration-500">
+                          <ArrowUpRight size={24} />
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
-            <div className="md:col-span-4 aspect-video bg-white/5 rounded-[2.5rem] p-12 flex flex-col justify-end group overflow-hidden relative border border-white/10">
-              <div className="absolute inset-0 group-hover:scale-110 transition-transform duration-700">
-                 <Image 
-                   src={PetsTracker} 
-                   alt="Smart Collar" 
-                   fill
-                   className="object-cover"
-                 />
-              </div>
-              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-              <div className="relative z-10">
-                <span className="px-3 py-1 bg-accent rounded-full text-[10px] font-black uppercase tracking-widest text-champagne mb-4 inline-block">Prototyping</span>
-                <h4 className="text-3xl font-black text-champagne mb-4 clash-display">Smart Collar Dashboard</h4>
-                <p className="text-champagne/60 max-w-md">Real-time biomechanic visualization for high-performance service animals and elite pets.</p>
-              </div>
-            </div>
-            
-            <div className="md:col-span-2 aspect-square md:aspect-auto bg-accent rounded-[2.5rem] p-10 flex flex-col justify-end text-champagne shadow-2xl shadow-accent/20">
-              <h4 className="text-2xl font-black mb-4 clash-display leading-tight">Premium Kibble <br />Subscription Flow</h4>
-              <p className="text-white/60 text-sm">Optimizing D2C conversion for personalized luxury pet nutrition brands.</p>
-            </div>
+                  {/* Information below card */}
+                  <div className="mt-8 md:mt-12 md:px-6">
+                    <div className="flex justify-between items-start text-foreground">
+                      <div>
+                        <div className="flex items-center gap-3 mb-4">
+                          <span className="h-1 w-8 bg-accent" />
+                          <span className="text-[10px] font-black uppercase tracking-widest text-foreground/40">{project.category}</span>
+                        </div>
+                        <h3 className="text-2xl md:text-5xl font-black clash-display leading-tight">{project.title}</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
-            <div className="md:col-span-2 aspect-square bg-white/5 border border-white/10 rounded-[2.5rem] p-10 flex flex-col justify-center items-center text-center">
-              <span className="text-4xl mb-4 italic text-white/10">03</span>
-              <h4 className="text-xl font-bold text-white/40 clash-display">Pet-Biometric <br />Security Keys</h4>
-            </div>
-
+        {/* Dynamic CTA */}
+        <div className="mt-80 relative overflow-hidden rounded-[4rem] bg-accent text-foreground p-20 md:p-32 text-center group">
+          <div className="absolute inset-0 bg-white/5 scale-0 group-hover:scale-150 transition-transform duration-1000 rounded-full" />
+          <div className="relative z-10">
+            <span className="text-foreground/60 font-bold uppercase tracking-[0.4em] text-xs mb-8 block font-mono italic">Curating Excellence</span>
+            <h2 className="text-5xl md:text-8xl font-black mb-16 clash-display leading-none tracking-tighter">
+              READY TO BUILD <br /> YOUR FLAGSHIP?
+            </h2>
             <Link 
               href="/contact"
-              className="md:col-span-4 aspect-21/9 bg-white/5 border border-white/10 rounded-[2.5rem] p-12 flex items-center justify-between group cursor-pointer hover:border-accent transition-colors"
+              className="inline-flex items-center gap-6 bg-foreground text-background px-16 py-8 rounded-full font-black text-2xl hover:scale-105 transition-all shadow-2xl active:scale-95"
             >
-              <div>
-                <h4 className="text-3xl font-black text-foreground clash-display">Join the Alpha</h4>
-                <p className="text-foreground/60">Partner with our studio to build the next industry leader.</p>
-              </div>
-              <div className="h-16 w-16 rounded-full bg-accent flex items-center justify-center text-champagne group-hover:scale-110 transition-all">
-                <ArrowUpRight size={32} />
-              </div>
+              Start Collaboration <ArrowUpRight size={32} />
             </Link>
           </div>
         </div>
