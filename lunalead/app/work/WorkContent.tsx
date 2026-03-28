@@ -78,7 +78,7 @@ export default function WorkContent() {
           <span className="text-accent font-bold uppercase tracking-[0.4em] text-xs mb-6 block font-clash">Portfolio</span>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] clash-display tracking-tight mb-12">
             SELECTED <br />
-            <span className="text-accent italic">WORKS.</span>
+            <span className="text-accent">WORKS.</span>
           </h1>
           <p className="text-xl md:text-2xl text-foreground/80 max-w-3xl font-medium leading-relaxed">
             Where precision engineering meets bespoke brand design. 
@@ -165,7 +165,7 @@ export default function WorkContent() {
           <div className="absolute inset-0 bg-white/5 scale-0 group-hover:scale-150 transition-transform duration-1000 rounded-full" />
           <div className="relative z-10">
             <span className="text-foreground/60 font-bold uppercase tracking-[0.4em] text-xs mb-8 block font-mono italic">Curating Excellence</span>
-            <h2 className="text-5xl md:text-8xl font-black mb-16 clash-display leading-none tracking-tighter">
+            <h2 className="text-5xl md:text-8xl font-black mb-16 clash-display leading-none tracking-wide">
               READY TO BUILD <br /> YOUR FLAGSHIP?
             </h2>
             <Link 
